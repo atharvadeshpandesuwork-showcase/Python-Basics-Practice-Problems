@@ -194,7 +194,7 @@ print(f"Eligible Customers: {eligible_customers}")
 print(f"Non Eligible Customers: {not_eligible_customers}")
 print(f"Total Discount Given {total_discount}")
 ```
-``` text
+``` Text
 Enter the number of customers 5
 Enter amount for items purchased for customer 1 20000
 Enter amount for items purchased for customer 2 30000
