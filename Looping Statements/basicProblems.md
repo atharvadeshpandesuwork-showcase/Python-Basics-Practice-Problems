@@ -210,3 +210,20 @@ Eligible Customers: 5
 Non Eligible Customers: 0
 Total Discount Given 20800.0
 ```
+
+Problem 5: The HR department wants to prepare a Monthly Employee Performance Report. You have to process multiple employees and generate a summary. Write a python program that asks for:
+- Enter the number of employees.
+- For every employee input: Employee Name, Annual Salary, Performance Rating
+- The allowed ratings will be: Excellent, Good, Average, Poor
+- The validation rules are as follows:
+- Salary should be greater than 0, if not display "Invalid Salary" and ask for the salary of the same employee again.
+- If the values dont match performance rating values given then display "Invalid Rating" and ask for the rating of the same employee.
+- Also there are rules for bonus:
+- Excellent - 20%, Good - 10%, Average - 5%, Poor - 0%
+
+At end display the following information: Total Employees, Total Salary, Average Salary, Highest Salary, Lowest Salary, Count of Excellent Employees, Count of Good Employees, Count of Average Employees, Count of Poor Employees, Total Bonus Budget
+
+``` python
+```
+``` text
+```
