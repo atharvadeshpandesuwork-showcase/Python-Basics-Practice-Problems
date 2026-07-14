@@ -149,7 +149,64 @@ High Earners Count: 3
 Low Earners Count: 1
 ```
 
+Problem 4: An e-commerce company wants to analyze customer purchases made during the day. You need to process multiple customer orders and generate a summary report. Write a Python program that:
+- Accepts the number of customers.
+- Accepts the purchase amount for each customer.
+- Calculate: Total Sales, Average Purchase, Highest Purchase, Lowest Purchase, Number of customers eligible for discount (Purchase ≥ ₹5000), Number of customers not eligible for discount (Purchase < ₹5000).
+
 ``` python
+customer_count = int(input("Enter the number of customers"))
+total_sales = 0
+eligible_customers = 0
+not_eligible_customers = 0
+total_discount = 0
+
+for i in range(0,customer_count,1):
+    purchase_amount = int(input(f"Enter amount for items purchased for customer {i+1}"))
+    total_sales = total_sales + purchase_amount
+
+    if i == 0:
+        highest_purchase = purchase_amount
+        lowest_purchase = purchase_amount
+
+    if purchase_amount > highest_purchase:
+        highest_purchase = purchase_amount
+
+    if purchase_amount < lowest_purchase:
+        lowest_purchase = purchase_amount
+    
+    if purchase_amount >= 5000:
+        eligible_customers = eligible_customers + 1
+        discount = purchase_amount * 0.1
+        total_discount = total_discount + discount
+
+    if purchase_amount < 5000:
+        not_eligible_customers = not_eligible_customers + 1
+
+average_sales = total_sales / customer_count
+
+print(f"Total Customers: {customer_count}")
+print(f"Total Sales: {total_sales}")
+print(f"Average Purchase: {average_sales}")
+print(f"Highest Purchase: {highest_purchase}")
+print(f"Lowest Purchase: {lowest_purchase}")
+print(f"Eligible Customers: {eligible_customers}")
+print(f"Non Eligible Customers: {not_eligible_customers}")
+print(f"Total Discount Given {total_discount}")
 ```
 ``` text
+Enter the number of customers 5
+Enter amount for items purchased for customer 1 20000
+Enter amount for items purchased for customer 2 30000
+Enter amount for items purchased for customer 3 50000
+Enter amount for items purchased for customer 4 100000
+Enter amount for items purchased for customer 5 8000
+Total Customers: 5
+Total Sales: 208000
+Average Purchase: 41600.0
+Highest Purchase: 100000
+Lowest Purchase: 8000
+Eligible Customers: 5
+Non Eligible Customers: 0
+Total Discount Given 20800.0
 ```
