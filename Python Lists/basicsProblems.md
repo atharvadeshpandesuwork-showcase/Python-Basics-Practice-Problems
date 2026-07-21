@@ -1,1 +1,165 @@
+Problem 1: An HR executive wants to store the names of newly hired employees. Your program should collect the employee name and display them at the end. Write a python program that will take the number of emplyees as input. Using a for loop take the input of employee names and store it in a list. After this display all the names of the employees.
 
+``` python
+employee_count = int(input("Enter the number of employees"))
+employee_list = []
+increment = 0 
+while increment < employee_count:
+    employee_name = str(input("Enter employee name"))
+    employee_list.append(employee_name)
+    increment = increment + 1
+
+for i in range(employee_count):
+    print(f"{i + 1}. {employee_list[i]}")
+```
+``` text
+Enter the number of employees 2
+Enter employee name Atharva
+Enter employee name Sujat
+1. Atharva
+2. Sujat
+```
+
+Problem 2: A school has recently completed its semester examinations. The class teahcer wants to prepare a simple report of the students marks. Instead of calculating everything manually, the teacher asked to build a python program that collects the marks of all the students and generates a summary report. The program should allow the teacher to enter marks for multiple students store them in a list, display the entered marks, calculate the total marks obtained by class and compute the average marks. Create a python program that stores the student marks in a list and generates the summary report.
+
+```python
+student_count = int(input("Enter the number of students"))
+print("")
+student_marks = []
+total_marks = 0
+average_marks = 0
+for i in range(student_count):
+    student_marks_entry = int(input(f"Enter the marks for student {i+1}"))
+    student_marks.append(student_marks_entry)
+print("")
+print("---- Student Marks ----")
+for i in range(student_count):
+    print(f"Student {i+1} marks: {student_marks[i]}")
+    total_marks = total_marks + student_marks[i]
+
+average_marks = total_marks / student_count
+print("")
+print("---- Class Performance Report ----")
+print(f"Total Students: {student_count}")
+print(f"Total Marks: {total_marks}")
+print(f"Average Marks: {average_marks}")
+```
+``` text
+Enter the number of students 5
+
+Enter the marks for student 1 22
+Enter the marks for student 2 45
+Enter the marks for student 3 55
+Enter the marks for student 4 56
+Enter the marks for student 5 85
+
+---- Student Marks ----
+Student 1 marks: 22
+Student 2 marks: 45
+Student 3 marks: 55
+Student 4 marks: 56
+Student 5 marks: 85
+
+---- Class Performance Report ----
+Total Students: 5
+Total Marks: 263
+Average Marks: 52.6
+```
+
+Problem 3: The management of ABC public school wants to automate the preparation of class performance report after the semeter examinations. Currently the calculate the results manually which is time consuming and prone to errors. The school has asked to develop a python program that stores students marks and generates a summary report containing important class statistics. The report should help teachers understand the overall performance of the class. 
+
+Develop a python program that collects all the marks of the students stores them in the list and performs various claculations and generates a class performance report.
+
+Calculate the following:
+- Total Marks
+- Average Marks
+- Maximum Marks
+- Minimum Marks
+- Count of passed students
+- Count of failed students
+
+``` python
+student_marks = []
+total_marks = 0
+average_marks = 0
+highest_marks = 0
+lowest_marks = 0
+passed_students = 0
+failed_students = 0
+increment = 0
+
+# Program starts
+student_count = int(input("Enter the total numnber of students"))
+
+while increment < student_count:
+    student_marks_entry = int(input(f"Enter the marks of Student {increment + 1}"))
+    if student_marks_entry < 0 or student_marks_entry > 100:
+        print("Invalid marks")
+        print("Please enter marks between 0 and 100")
+        student_marks_entry = int(input(f"Enter the marks of Student {increment + 1}"))
+    else:
+        student_marks.append(student_marks_entry)
+        increment = increment + 1
+print("")
+print("--- Student Marks ---")
+
+# Print Student Marks
+for i in range(student_count):
+    print(f"Student {i+1} : {student_marks[i]}")
+    total_marks = total_marks + student_marks[i]
+
+# Seprate block only to count number of passed and failed students and max and min marks 
+for i in range(student_count):
+    if student_marks[i] >= 35:
+        passed_students = passed_students + 1
+    else:
+        failed_students = failed_students + 1
+# Block to check max and min marks
+    if i == 0:
+        highest_marks = student_marks[i]
+        lowest_marks = student_marks[i]
+
+    if student_marks[i] > highest_marks:
+        highest_marks = student_marks[i]
+
+    if student_marks[i] < lowest_marks:
+        lowest_marks = student_marks[i]
+        
+
+average_marks = total_marks / student_count
+
+
+print("")
+print("--- Class Performance Report ---")
+print(f"Total Students: {student_count}")
+print(f"Total Marks: {total_marks}")
+print(f"Average Marks: {average_marks}")
+print(f"Highest Marks: {highest_marks}")
+print(f"Lowest Marks: {lowest_marks}")
+print(f"Passed Students: {passed_students}")
+print(f"Failed Students: {failed_students}")
+```
+``` text
+Enter the total numnber of students 5
+Enter the marks of Student 1 85
+Enter the marks of Student 2 74
+Enter the marks of Student 3 92
+Enter the marks of Student 4 68
+Enter the marks of Student 5 80
+
+--- Student Marks ---
+Student 1 : 85
+Student 2 : 74
+Student 3 : 92
+Student 4 : 68
+Student 5 : 80
+
+--- Class Performance Report ---
+Total Students: 5
+Total Marks: 399
+Average Marks: 79.8
+Highest Marks: 92
+Lowest Marks: 68
+Passed Students: 5
+Failed Students: 0
+```
