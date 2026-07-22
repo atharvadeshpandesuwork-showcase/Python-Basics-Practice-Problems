@@ -239,3 +239,59 @@ Q4. If there are 10 lakh (1,000,000) employee names, would this approach still b
 - If the employee is near the end of the list or does not exist, the program may need to compare almost every record before reaching a conclusion.
 - As the size of the list increases, the search time increases proportionally.
 - For very large datasets, more efficient data structures or algorithms, such as hash tables or binary search on sorted data, are preferred because they can reduce the search time significantly."
+
+Problem 5: ABC Technologies maintains a list of employee names in the order they joined the company. Before preparing for the farewell summary, the HR department wants to display the employee names in reverse order so that the most recently added employee appears first. As a python developer, your task is to write a program that accepts employee names from users, stores them in a list and displays the list in reverse order without using the pythons inbuilt functions. Write a python program that performs the following tasks:
+- Ask the user to enter the total number of employees.
+- Accept the name of each employee and store them in a list.
+- Display the original employee list.
+- Display the employee names in reverse order by traversing the list from the last element to first.
+- Do not modify the original list.
+- Do not use any built in methods or shortcuts for reversing the elements.
+
+Functional Requirements
+- Accept the number of employees from the user.
+- Store the employee names using a python list.
+- Print the employee names in the same order they were entered.
+- Print the employee names in reverse order.
+- The original list should remain unpacked after displaying the reversed order.
+
+``` Python
+employee_count = int(input("Enter the number of employees"))
+employee_list = []
+employee_record = ""
+
+for i in range(employee_count):
+    employee_record = input(f"Enter the name of employee: {i+1}")
+    employee_list.append(employee_record)
+
+# Printing the original employee list
+for i in range(employee_count):
+    print(f"Employee {i+1}: {employee_list[i]}")
+
+print("")
+print("Employee names in reverse order")
+print("")
+# Printing employee names in reverse order
+for i in range(employee_count-1,-1,-1):
+    print(f"Employee {i + 1}: {employee_list[i]}")
+```
+``` Text
+Enter the number of employees 5
+Enter the name of employee: 1 Atharva
+Enter the name of employee: 2 Sujat
+Enter the name of employee: 3 Anjali
+Enter the name of employee: 4 Usha
+Enter the name of employee: 5 Priya
+Employee 1: Atharva
+Employee 2: Sujat
+Employee 3: Anjali
+Employee 4: Usha
+Employee 5: Priya
+
+Employee names in reverse order
+Employee 5: Priya
+Employee 4: Usha
+Employee 3: Anjali
+Employee 2: Sujat
+Employee 1: Atharva
+```
