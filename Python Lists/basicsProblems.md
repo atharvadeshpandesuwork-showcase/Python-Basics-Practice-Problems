@@ -163,3 +163,79 @@ Lowest Marks: 68
 Passed Students: 5
 Failed Students: 0
 ```
+
+Problem 4: ABC Technologies maintains a list of employee names. The HR department frequently recieves requests to verify whether a particular employee works in the organizatin. Instead of manually searchip through the employee records, they want a python program that stores the employee names and allows the HR to search for an employee efficiently. Create a python program that:
+- Stores employee names in a list
+- Displays all employee names
+- Searches for an employee entered by the user
+- Displays whether the emplyee exsists.
+
+``` python
+employee_count = int(input("Enter the number of employees"))
+employee_list = []
+found_str = False
+employee_record = ""
+search_employee_record = ""
+increment = 0
+
+while increment < employee_count:
+    employee_record = input(f"Enter the name of employee {increment + 1}: ")
+    employee_list.append(employee_record)
+    increment = increment + 1
+
+# Loop to print employee records
+for i in range(employee_count):
+    print(f"Employee {i+1}: {employee_list[i]}")
+
+search_employee_record = input("Enter name of employee to be searched") 
+
+# Loop to search for employee name
+for i in range(employee_count):
+    if employee_list[i] == search_employee_record:
+        found_str = True
+        break
+
+if found_str == True:
+    print("Employee Found")
+else:
+    print("Employee Not Found")
+```
+``` text
+Enter the number of employees 4
+Enter the name of employee 1:  Rahul
+Enter the name of employee 2:  Priya
+Enter the name of employee 3:  Amit
+Enter the name of employee 4:  Sneha
+Employee 1: Rahul
+Employee 2: Priya
+Employee 3: Amit
+Employee 4: Sneha
+Enter name of employee to be searched Rahul
+Employee Found
+```
+
+Q1. Why do we use a found variable ?
+- The found variable is a boolean flag that keeps the track of whether the employee exsists in the list.
+- It is initialized to False because the search has not started yet.
+- During traversal of the list if a matching employee is found, the flag is changed to true.
+- After the loop completes the program checks the value of this flag to decide whether to display "Employee Found" or "Employee Not Found".
+- Without this flag the program would not have a simple way to remember the result of the search after the loop is finished.
+
+Q2. Why cant we simply print "Employee Not Found" inside the for loop whenever the current employee does not match the search name ?
+- We should not print "Employee Not found" inside the loop because each iteration checks only one employee.
+- If the current employee does not match it does not mean that the name is absent from the entire list. It only means that particular record isnt a match.
+- The employee may exsist later in the list.
+- Therefore we should complete the search and print "Employee Not Found" only after confirming that no matching record exsists.
+
+Q3. What is the time complexity of searching trough a list using for loop ?
+- This program uses linear search.
+- In the best case employee is first records in the list so only one comparison is required before the loop stops using break statement.
+- The best case time complexity is O(1).
+- In the worst case the employee is in the last index of the list or does not even exsist so every employee must be checked.
+- Therefore the worst case time complexity is O(n) where n is the number of employees.
+
+Q4. If there are 10 lakh (1,000,000) employee names, would this approach still be efficient ? Why or why not ?
+- For a list containing 10 lakh employee names, this approach is generally not efficient because linear search has a worst-case time complexity of O(n).
+- If the employee is near the end of the list or does not exist, the program may need to compare almost every record before reaching a conclusion.
+- As the size of the list increases, the search time increases proportionally.
+- For very large datasets, more efficient data structures or algorithms, such as hash tables or binary search on sorted data, are preferred because they can reduce the search time significantly."
