@@ -295,3 +295,81 @@ Employee 3: Anjali
 Employee 2: Sujat
 Employee 1: Atharva
 ```
+Problem 6: ABC electronics wants to calculate the the total sales for a day.
+- Ask the user for the number of products sold.
+- Store each product sale in amount list.
+- Display all sales.
+- Calculate the total sales using sum().
+- Calculate the average sales using the total retruned by sum().
+- Display both values.
+
+``` Python
+products_sold = int(input("Enter the number of products sold"))
+products_price_list = []
+total_sales = 0
+increment = 0 
+for i in range(products_sold):
+    price_entry = int(input(f"Enter the price of product {i+1}"))
+    products_price_list.append(price_entry)
+
+while increment < products_sold:
+    print(f"Price of product{increment + 1}: {products_price_list[increment]}")
+    increment = increment + 1
+
+total_sales = sum(products_price_list)
+print(f"Total sales: {total_sales}")
+print(f"Average sales: {total_sales / products_sold }")
+```
+``` Text
+Enter the number of products sold 2
+Enter the price of product 1 10000
+Enter the price of product 2 20000
+Price of product1: 10000
+Price of product2: 20000
+Total sales: 30000
+Average sales: 15000.0
+```
+
+Problem 7: ABC Electronics is a nationwide retailer that tracks the sales value of products sold each month. The management wants to quickly identify the highest monthly sales amount to recognize companys best peforming month and use it for performance analysis. Previously the analyst manually compared every sales value to find the highest amount. As a python developer your task is to develop a program that records monthly sales and displays them and identifies the highest sales amount using max function.
+
+Functional Requirements
+Your program should ask the user:
+- Ask the user to enter the number of months.
+- Store each month number sales amount in a list.
+- Display all recorded monthly sales.
+- Display the highest sales amount.
+
+``` Python
+no_months = int(input("Enter number of months"))
+monthwise_sales = []
+max_sales = 0
+
+# Enter monthly sales loop
+for i in range(no_months):
+    sales_entry = int(input(f"Enter the month {i+1} sales"))
+    monthwise_sales.append(sales_entry)
+
+# Print monthwise sales
+for i in range(no_months):
+    print(f"Month {i+1}: {monthwise_sales[i]}")
+
+max_sales = max(monthwise_sales)
+print(f"Highest monthly sales: {max_sales}")
+
+```
+``` Text
+Enter number of months 2
+Enter the month 1 sales 50000
+Enter the month 2 sales 60000
+Month 1: 50000
+Month 2: 60000
+Highest monthly sales: 60000
+```
+
+Q1. What does the max() function do ?
+
+The max() function is a python built in function that retruns the largest element from an iterable such as list, tuple, or string. It compares all the elements and retruns the maximum value.
+
+Q2. How is max() different from sum() ?
+
+The sum function iterates through an iterable and returns the total of the numeric elements. On the other hand the max() function iterates through the iterable compares all the elements and find the largest element.
