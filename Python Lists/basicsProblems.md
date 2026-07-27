@@ -366,10 +366,69 @@ Month 2: 60000
 Highest monthly sales: 60000
 ```
 
-Q1. What does the max() function do ?
+Problem 7: ABC Technologies is conducting its annual salary review. Before finalizing the increment budget the HR department wants to identify the employee with the second highest salary. The HR team already has the salary details of all the employees but they need a python program to automate this task instead of checking salaries manually. As a data analyst your responsibility is to write a program that needs the employee salaries and determined the highest unique salary. Write a python program to do the following tasks:
+- Ask the user to enter the number of employees.
+- Accept salary of each employee from the user.
+- Store all the salaries in a list.
+- Display the complete list of employees.
+- Arrange the salaries in ascending order.
+- Display the sorted salary list.
+- Find and display the second highest unique salary.
 
-The max() function is a python built in function that retruns the largest element from an iterable such as list, tuple, or string. It compares all the elements and retruns the maximum value.
+Using Mannual Sorting
+``` python
+```
+``` Text
+```
 
-Q2. How is max() different from sum() ?
+Using sort method
+``` python
+no_employees = int(input("Enter the number of employees"))
+employees_salary = []
 
-The sum function iterates through an iterable and returns the total of the numeric elements. On the other hand the max() function iterates through the iterable compares all the elements and find the largest element.
+# Loop to enter salary employees in list
+for i in range(no_employees):
+    salary_record = int(input(f"Enter the salary of employee {i+1}:"))
+    employees_salary.append(salary_record)
+
+print("Employee Salary")
+print("")
+
+# loop to print the salaries
+for i in range(no_employees):
+    print(employees_salary[i])
+
+new_list = employees_salary
+
+print("Sorted employee salary")
+print("")
+
+# Loop to print the sorted salaries
+for i in range(no_employees):
+    print(new_list[i])
+
+highest_salary = new_list[-1]
+salary_found = False
+
+for i in range(len(new_list)-2,-1,-1):
+    if new_list[i] != highest_salary:
+        print(f"Second highest salary {new_list[i]}")
+        salary_found = True
+        break
+    else:
+        print("Second highest salary does not exsist")
+```
+``` Text
+Enter the number of employees 2
+Enter the salary of employee 1: 1000
+Enter the salary of employee 2: 20000
+Employee Salary
+
+1000
+20000
+Sorted employee salary
+
+1000
+20000
+Second highest salary 1000
+```
