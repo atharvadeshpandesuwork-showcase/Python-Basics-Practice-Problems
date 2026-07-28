@@ -558,12 +558,12 @@ if found == False:
 ```
 ``` Text
 Enter the number of products 5
+
 Enter the sales for Product 1: 2000
 Enter the sales for Product 2: 600
 Enter the sales for Product 3: 100
 Enter the sales for Product 4: 10000
 Enter the sales for Product 5: 1000
-
 
 Product 1 sales: 2000
 Product 2 sales: 600
@@ -571,10 +571,8 @@ Product 3 sales: 100
 Product 4 sales: 10000
 Product 5 sales: 1000
 
-
 Sorted List
 [100, 600, 1000, 2000, 10000]
-
 
 Highest Sales is of: 10000
 Second highest sales: 2000
