@@ -1,1 +1,1 @@
-
+Problem 1: You have recently joined ABC Technologies Pvt Ltd as a Junior data analyst. The Human Resources department is preparing an organizational report for company annual board meeting. Currently the Human Resources department is preparing 
