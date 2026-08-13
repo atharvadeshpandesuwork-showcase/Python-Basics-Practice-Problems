@@ -116,3 +116,112 @@ Ans: A set is the ideal data structure for finding unique cities because it auto
 Q2. What happens if we write "Mumbai" 100 times in a set?
 
 Ans: Python does not keep multiple copies of a single value in a set. When you try to add "Mumbai" again it already contains the value so nothing changes. Therefore when duplicate value is added in a set Python ignores it since it already exists in the set.
+
+Q3. Can a Set store different datatypes?
+
+Ans: Yes a set can store different data types together, provided the elements are immutable. For example integers, strings, floats, Booleans, and tuples can all be stored in the same set. Mutable objects like lists and dictionaries cannot be stored because they are unshashable.
+
+Q4. Why sets are unordered?
+
+Ans: Sets are unordered because they are implemented using a hash table. Their primary purpose is to store unique elements and provide fast membership checking, not to preserve insertion order. Therefore the order of elements in sets is not guaranteed.
+
+Problem 3: You have recently joined tech mart ltd as a junior data analyst. Tech Mart is one of India's fastest growing retail companies selling products across multiple categories such as: Electronics, Clothing, Grocery, Furniture, Sport's, Books, Home Appliances, Beauty and personal care. Every day thousands of products are sold through the company's website. At the end of each month sales and inventory departments generate reports to understand which product categories are currently being sold. However there is a challenge. Since thousands of products are sold the sales database contains same category multiple times.
+
+Example:
+```Text
+Electronics, Clothing, Electronics, Furniture, Books, Electronics, Sports, Furniture, Books, Clothing
+```
+
+The inventory manager is not interested in how many products were sold in each category. Instead, management wants a report answering the following business question:
+
+"Which unique product categories are available in our sales data?"
+
+This information helps the company:
+- Understand the variety of products being sold.
+- Plan warehouse storage.
+- Identify product categories.
+- Prepare inventory planning reports.
+- Analyze category wise business expansion opportunities.
+
+Instead of manually checking for duplicate category names your manager has asked you to develop a python program to only display unique categories.
+
+Sample Input
+```Text
+Enter total products sold: 10
+
+Electronics
+Clothing
+Electronics
+Furniture
+Books
+Electronics
+Sports
+Books
+Furniture
+Clothing
+```
+Sample Output
+```Text
+TechMart Product Category Report
+
+Unique Categories
+{'Furniture', 'Books', 'Sports', 'Electronics', 'Clothing'}
+Total Products Sold: 10
+Unique Product Categories: 5
+```
+Solution
+```python
+products_sold = int(input("Enter the total number of products sold"))
+products_category = set()
+for i in range(products_sold):
+    product_record = str(input(f"Enter the category of product{i+1}"))
+    products_category.add(product_record)
+print("TechMart Product Category Report")
+print()
+print("Unique Categories")
+print(products_category)
+print()
+print(f"Total Products Sold {products_sold}")
+print(f"Unique product categories {len(products_category)}")
+```
+```Text
+Enter the total number of products sold 5
+Enter the category of product1 Electronics
+Enter the category of product2 Clothes
+Enter the category of product3 Electronics
+Enter the category of product4 Books
+Enter the category of product5 Sports
+TechMart Product Category Report
+
+Unique Categories
+{'Electronics', 'Books', 'Sports', 'Clothes'}
+
+Total Products Sold 5
+Unique product categories 4
+```
+
+Interview Questions
+
+Q1. Why set is a better choice than list for this problem?
+
+Ans: A set is a better choice than list because the business requirement is to identify unique product categories. A set automatically stores only unique values and ignores duplicate entries, so we don't need to write any additional logic to remove duplicates. A list allows duplicate values, which would require extra processing to identify unique categories. Therefore a set provides a simpler and more efficient solution for this problem.
+
+Q2. What happens if "Electronics" is entered 1,000 times?
+
+Ans: If electronics is stored a 1000 times, then the set will contain only one "Electronics". When python encounters duplicate values, it does not add them because a set stores only unique elements. Therefore, regardless of how many times "Electronics" is entered it will appear only once in a set.
+
+Q3. Why doesn't a Set maintain the order of insertion?
+
+Ans: Sets do not maintain the order of insertion because they are used to provide fast lookup, insertion, and duplicate checking rather than preserving the order in which the elements were added. Python stores set elements using a hash table which organizes elements for efficient access instead of sequential order.
+
+Q4. Can we access the first category using categories[0]?
+
+Ans: No we cannot access the elements using indexing in a set because sets are unordered and do not maintain index positions. Internally python stores the elements using a hash table for faster lookup and duplicate checking rather than sequential indexing. There expressions like categories[0] are not allowed and will raise a TypeError.
+
+Q5. If the company has 1,00,000 products but only 12 categories, why is a Set an efficient data structure for generating this report?
+
+Ans: A set is a efficient data structure for this problem because the company wants to identify unique product categories. Even if there are 1,00,000 products, python stores each category only once and automatically ignores the duplicate entries. This allows us to quickly determine all the unique categories without writing additional logic to remove duplicates. As a result the code is simpler more efficient and easier to maintain. 
+
+Q6. What is the difference between add() (Set) and append() (List)?
+
+Ans: The append() method is used to add an element at the end of the list. Since lists in python allows duplicate values it is important to maintain the order of insertion of every element being stored. The add() method is used in sets to insert a new element into the set. If the element already exists then python ignores it because sets store only unique values.
