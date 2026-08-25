@@ -313,3 +313,136 @@ Q5. Could this validation be implemented using a List? If yes, what additional w
 Ans: Yes, this validation can also be implemented using a List. However, a List allows duplicate values, so it will store every Employee ID, including duplicates. To detect duplicate Employee IDs, we would need to write additional logic to compare each Employee ID with the others or maintain another data structure to track which IDs have already been seen. This makes the solution more complex and less efficient than using a Set, which automatically stores only unique values.
 
 Problem 5: You have recently joined soft sphere technologies as a Junior Data Analyst. Soft Sphere develops accounting and payroll software across India. Whenever a customer purchases the software, they receive a license key. Every license key is expected to be unique because it represents a single software activation. However, during a recent data migration from old licensing system some license keys were accidentally duplicated due to database synchronizations issues. Before activating the licenses for customers, the licensing team wants to verify whether the imported data contains duplicate license keys. Instead of manually checking thousands of records your manager has asked you to develop a program using python sets. The final team will help the licensing team identify whether the imported dataset is valid before releasing the software to the customers.
+
+Sample Input
+```Text
+Enter total License Keys imported: 8
+LIC1001
+LIC1002
+LIC1003
+LIC1002
+LIC1004
+LIC1005
+LIC1005
+LIC1006
+```
+
+Sample Output
+```Text
+Software License Validation Report
+
+Unique License Keys
+{'LIC1001','LIC1002','LIC1003','LIC1004','LIC1005','LIC1006'}
+
+Total Imported License Keys : 8
+Unique License Keys : 6
+Duplicate License Keys detected.
+License database requires verification.
+```
+
+Solution:
+```Python
+no_license_keys = int(input("Enter the total number of license keys imported"))
+license_keys = set()
+for i in range(no_license_keys):
+    keys = str(input(f"Enter license key {i+1}:"))
+    license_keys.add(keys)
+print("Software license validation report")
+print("Unique License Keys")
+print(license_keys)
+print()
+print(f"License keys imported: {no_license_keys}")
+print(f"Unique license keys {len(license_keys)}")
+
+if no_license_keys > len(license_keys):
+    print("Duplicate License keys detected")
+    print("Database requires validation")
+else:
+    print("All license keys are unique")
+    print("Database validation sucessful")
+```
+```Text
+Enter the total number of license keys imported 5
+Enter license key 1: LIC101
+Enter license key 2: LIC102
+Enter license key 3: LIC103
+Enter license key 4: LIC104
+Enter license key 5: LIC101
+Software license validation report
+Unique License Keys
+{'LIC103', 'LIC102', 'LIC101', 'LIC104'}
+
+License keys imported: 5
+Unique license keys 4
+Duplicate License keys detected
+Database requires validation
+```
+
+Problem 6: You have recently joined innovate Tech Solutions pvt ltd as a junior data analyst. The company is planning to bid for several new client projects such as Python, SQL, PowerBI, Tableau. Excel, Azure, AWA and Machine Learning. Before assigning employees to these projects the Human Resources (HR) and Resource Management teams want to prepare skill inventory report. Every employee submits their primary technical skill. Since many employees possess the same skill the HR database contains duplicate skill entries. For example: Python, SQL, Excel,
+Python, Power BI, SQL, Excel, Tableau, Power BI. The management is not interested in how many employees know each skill. 
+
+Instead, they want to know: "What unique technical skills are available in the organization?". This report will help the management determine whether the company has necessary expertise before accepting new client projects. Instead of manually removing duplicate skill sets your manager has instructed to use python sets. As a junior data analyst your responsibility is to automate the skill inventory report. The program should identify the unique technical skills available in the organization.
+
+Sample Input
+```Text
+Enter total number of employees: 8
+Python
+SQL
+Python
+Excel
+Power BI
+SQL
+Tableau
+Excel
+```
+
+Sample Output
+```Text
+Employee Skill Inventory Report
+Unique Skills
+{'Python', 'SQL', 'Excel', 'Power BI', 'Tableau'}
+
+Total Employees: 8
+Unique Skills: 5
+The company has a diverse technical skill set.
+```
+
+Solution
+```Python
+total_employees = int(input("Enter the total number of employees"))
+skill_set = set()
+for i in range(total_employees):
+    skill_name = str(input("Enter the skill set of employees"))
+    skill_set.add(skill_name)
+print("Employee Skill inventory report")
+print()
+print("Unique Skills")
+print(skill_set)
+print()
+print(f"Total Employees: {total_employees}")
+print(f"No of unique skiils {len(skill_set)}")
+
+if len(skill_set) > 5:
+    print("The company has a diverse technical skill set.")
+else:
+    print("The company should invest in employee upskilling.")
+```
+
+```Text
+Enter the total number of employees 6
+Enter the skill set of employees SQL
+Enter the skill set of employees PYTHON
+Enter the skill set of employees POWERBI
+Enter the skill set of employees TABLEAU
+Enter the skill set of employees GOGGLE SHEETS
+Enter the skill set of employees PANDAS
+Employee Skill inventory report
+
+Unique Skills
+{'POWERBI', 'SQL', 'PYTHON', 'PANDAS', 'GOGGLE SHEETS', 'TABLEAU'}
+
+Total Employees: 6
+No of unique skiils 6
+The company has a diverse technical skill set.
+```
+
