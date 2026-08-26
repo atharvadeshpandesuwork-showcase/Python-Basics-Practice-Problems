@@ -446,3 +446,99 @@ No of unique skiils 6
 The company has a diverse technical skill set.
 ```
 
+Problem 7: You have recently joined velocity retail pvt ltd as a Junior Data Analyst. The company operates 2 retail stores in Mumbai and in Pune. During the annual sales review the marketing department wants to understand the company's complete customer reach. Currently each store maintains their own record database.
+
+Store A Customers: Rahul, Amit, Priya, Neha, Rohan
+Store B Customers: Neha, Amit, Sneha, Karan, Pooja
+
+Notice that some customers have shopped in both the stores. If the marketing team combines both customer lists, then duplicate customers will appear. This would lead to an incorrect estimate of the company's total customer base. The marketing manager has asked you to prepare a report showing the complete list of unique customers who have purchased from either store A or Store B. Instead of manually checking duplicate customer names your manager has suggested you use the union method in sets.
+
+The final report will be used to measure:
+- Measure company's total outreach.
+- Plan nationwide marketing campaign.
+- Estimate the total active customer base.
+- Design loyalty programs.
+
+As a junior data analyst your responsibility is to merge both customer database and generate a report containing only unique customers.
+
+Sample Input
+```Text
+Store A
+Rahul, Amit, Priya, Neha, Rohan
+
+Store B
+Neha, Amit, Sneha, Karan, Pooja,
+```
+
+Sample Output
+```Text
+Velocity Retail Customer Reach Report
+Store A Customers
+{'Rahul', 'Amit', 'Priya', 'Neha', 'Rohan'}
+
+Store B Customers
+{'Neha', 'Amit', 'Sneha', 'Karan', 'Pooja'}
+
+Combined Customer Database
+{'Rahul', 'Amit', 'Priya', 'Neha',
+'Rohan', 'Sneha', 'Karan', 'Pooja'}
+
+Total Unique Customers: 8
+```
+Solution
+```Python
+store_A_Cust_count = int(input("Enter the total number of customers for Store A"))
+store_B_Cust_count = int(input("Enter the total number of customers for Store B"))
+Store_A_Customers = set()
+Store_B_Customers = set()
+
+print("Store A Customers")
+for i in range(store_A_Cust_count):
+    customer_records = str(input(f"Enter name of Customer {i+1}:"))
+    Store_A_Customers.add(customer_records)
+
+print("Store B Customers")
+for i in range(store_B_Cust_count):
+    customer_records = str(input(f"Enter name of Customer {i+1}:"))
+    Store_B_Customers.add(customer_records)
+print()
+print("Velocity retail customer reach report")
+print("Store A Customers")
+print(Store_A_Customers)
+print()
+print("Store B Customers")
+print(Store_B_Customers)
+print()
+print("Combined Customer Base")
+resultset = Store_A_Customers.union(Store_B_Customers)
+print(resultset)
+print(f"Total unique customers: {len(resultset)}")
+```
+
+```Text
+Enter the total number of customers for Store A 2
+Enter the total number of customers for Store B 2
+Store A Customers
+Enter name of Customer 1: Dipti
+Enter name of Customer 2: Yogesh
+Store B Customers
+Enter name of Customer 1: Monica
+Enter name of Customer 2: Atharva
+
+Velocity retail customer reach report
+Store A Customers
+{'Yogesh', 'Dipti'}
+
+Store B Customers
+{'Monica', 'Atharva'}
+
+Combined Customer Base
+{'Yogesh', 'Monica', 'Atharva', 'Dipti'}
+Total unique customers: 4
+```
+Interview Questions
+
+Q1. What does the union() method do?
+Ans: The union() method is used to combine two or more sets into a single set containing all unique elements from each set. Duplicate values are automatically removed because sets only store unique values. The union method returns a new set and does not modify the original set.
+
+
