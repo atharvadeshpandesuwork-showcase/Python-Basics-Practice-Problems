@@ -541,4 +541,39 @@ Interview Questions
 Q1. What does the union() method do?
 Ans: The union() method is used to combine two or more sets into a single set containing all unique elements from each set. Duplicate values are automatically removed because sets only store unique values. The union method returns a new set and does not modify the original set.
 
+Q2. Why union() is useful in customer analytics?
+Ans: The union() method is useful in customer analytics because it combines customer data from multiple stores into a single set of unique customers. If the same customer has made purchases from one or more store, the union() method automatically removes duplicate entries and returns only one occurrence of that customer. This helps the company determine its total unique customer base, which is useful for marketing campaigns, customer reach analysis and loyalty program planning. 
+
+Q3. If the same customer shops at both stores, how many times will they appear in the union?
+Ans: If the customer shops at both stores they will appear only once in union. This is because union only returns a set elements containing only unique elements. Since sets do not allow duplicate values the customers name will only be included once regardless how many stores they have shopped at.
+
+Q4. What is the difference between union() and simply adding two lists together?
+Ans: The union method combines 2 or more sets and returns a new set containing only unique elements. Since sets automatically ignore duplicate values, no additional logic is required to remove duplicates. If we simply add two lists together using the (+) operator all the elements in the lists are combined including duplicate values. If we need only unique elements we must write additional logic to identify and remove duplicate elements.
+
+Q5. Can union() be performed on Lists? If not, why?
+Ans: No union() cannot be performed on lists because it is a method of Set data structure and not the List data structure. List do not have a union method. If we need to combine two lists and remove duplicates, we must write additional logic or convert the lists into sets before using union().
+
+Q6. Give another real-world example where union() would be useful in data analysis?
+Ans: A good example is combining customer data from online store and a physical store. Some customers may shop through both the channels. Using union() method allow us to combine both customer datasets and obtain a list of unique customers. This helps business understand its total customer reach and plan marketing campaigns more effectively. 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
