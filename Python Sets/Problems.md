@@ -556,18 +556,43 @@ Ans: No union() cannot be performed on lists because it is a method of Set data 
 Q6. Give another real-world example where union() would be useful in data analysis?
 Ans: A good example is combining customer data from online store and a physical store. Some customers may shop through both the channels. Using union() method allow us to combine both customer datasets and obtain a list of unique customers. This helps business understand its total customer reach and plan marketing campaigns more effectively. 
 
+Problem 8: You have recently joined velocity pvt limited as a junior data analyst. The company operates two retail store in Mumbai and Pune. At the end of the financial quarter the marketing department reviews customer purchasing behavior to identify company's most loyal customers. Management believes that customers who have purchased from both stores are more engaged with the brand and are eligible for: 
+- Premium membership programs.
+- Exclusive discount coupons.
+- Early product launch invitations.
+- Customer loyalty rewards.
 
+Each store maintains its own customer database.
 
+Store A Customers: Rahul, Amit, Neha, Priya, Rohan, Sneha
+Store B Customers: Neha, Amit, Karan, Pooja, Sneha, Riya
 
+The marketing manager is not interested in:
+- Customers who only purchased from one store.
+- The complete customer database.
 
+Instead, the management wants to answer one specific question: "Which customer have made purchases from Store A and Store B". These customers will automatically qualify for company's premium loyalty program. Instead of manually comparing the names your manager asked you to use the python's intersection method. As a junior data analyst your responsibility is to identify the customers who are common to both stores and prepare the premium customer report.
 
+Sample Input
+```Text
+Store A: Rahul, Amit, Neha, Priya, Rohan, Sneha
 
+Store B: Neha, Amit, Karan, Pooja, Sneha, Riya
+```
+Sample Output
+```Text
+Velocity Retail Premium Customer Report
 
+Store A Customers
+{'Rahul', 'Amit', 'Neha', 'Priya', 'Rohan', 'Sneha'}
 
+Store B Customers
+{'Neha', 'Amit', 'Karan', 'Pooja', 'Sneha', 'Riya'}
 
-
-
-
+Premium Customers
+{'Amit', 'Neha', 'Sneha'}
+Total Premium Customers: 3
+```
 
 
 
