@@ -594,8 +594,141 @@ Premium Customers
 Total Premium Customers: 3
 ```
 
-Problem 9:
+Solution:
+```python
+store_A_Cust_count = int(input("Enter the total number of customers for Store A"))
+store_B_Cust_count = int(input("Enter the total number of customers for Store B"))
+Store_A_Customers = set()
+Store_B_Customers = set()
 
+print("Store A Customers")
+for i in range(store_A_Cust_count):
+    customer_records = str(input(f"Enter name of Customer {i+1}:"))
+    Store_A_Customers.add(customer_records)
+
+print("Store B Customers")
+for i in range(store_B_Cust_count):
+    customer_records = str(input(f"Enter name of Customer {i+1}:"))
+    Store_B_Customers.add(customer_records)
+print()
+print("Velocity retail customer reach report")
+print("Store A Customers")
+print(Store_A_Customers)
+print()
+print("Store B Customers")
+print(Store_B_Customers)
+print()
+print("Combined Customer Base")
+resultset = Store_A_Customers.union(Store_B_Customers)
+print(resultset)
+print(f"Total unique customers: {len(resultset)}")
+```
+```Text
+Enter the total number of customers for Store A 2
+Enter the total number of customers for Store B 2
+Store A Customers
+Enter name of Customer 1: Dipti
+Enter name of Customer 2: Yogesh
+Store B Customers
+Enter name of Customer 1: Monica
+Enter name of Customer 2: Atharva
+
+Velocity retail customer reach report
+Store A Customers
+{'Yogesh', 'Dipti'}
+
+Store B Customers
+{'Monica', 'Atharva'}
+
+Combined Customer Base
+{'Yogesh', 'Monica', 'Atharva', 'Dipti'}
+Total unique customers: 4
+```
+
+Problem 9: You have recently joined Tech Nova Solutions Pvt Ltd as a data analyst. The company recently conducted two mandatory training programs for all employees: Python for data analysis and SQL for data analysis. To be eligible for the upcoming Business Intelligence Project an employee must have successfully completed both the programs. The HR department maintains two seprate databases:
+- Python Training Participants: Employees who completed python training.
+- SQL Training Participants: Employees who completed SQL training.
+Management now wants to identify employees who have completed both the training programs. These employees will be shortlisted for the new project. Instead of manually comparing employee names your manager has asked to use the pythons intersection method. As a junior data analyst your role is to generate the project eligibility report. Only employees who appear in both training records are included in the final report.
+
+Sample Input
+```Text
+Python Training
+Rahul, Amit, Neha, Sneha, Karan, Pooja
+
+SQL Training
+Neha, Rahul, Rohan, Sneha, Anjali
+```
+
+Sample Output
+```Text
+Project Eligibility Report
+
+Python Training Participants
+{'Rahul', 'Amit', 'Neha', 'Sneha', 'Karan', 'Pooja'}
+
+SQL Training Participants
+{'Neha', 'Rahul', 'Rohan', 'Sneha', 'Anjali'}
+
+Employees Eligible for the Project
+{'Rahul', 'Neha', 'Sneha'}
+Total Eligible Employees: 3
+```
+
+Solution
+```python
+python_training = set()
+sql_training = set()
+
+while True:
+    python_records = str(input("Enter the name of employees who completed the python course"))
+    if python_records.lower() == "done":
+        break
+    python_training.add(python_records)
+
+while True:
+    sql_records = str(input("Enter the name of the employees who have completed the SQL course "))
+    if sql_records.lower() == "done":
+        break
+    sql_training.add(sql_records)
+
+print("Project eligibility report")
+print("Python Training Participants")
+print(python_training)
+print("SQL Training Participants")
+print(sql_training)
+print("Employees eligible for project")
+print(python_training.intersection(sql_training))
+print(f"Total eligible employees: {len(python_training.intersection(sql_training))}")
+```
+
+```Text
+Enter the name of employees who completed the python course Rahul
+Enter the name of employees who completed the python course Amit
+Enter the name of employees who completed the python course Neha
+Enter the name of employees who completed the python course Sneha
+Enter the name of employees who completed the python course Karan
+Enter the name of employees who completed the python course Pooja
+Enter the name of employees who completed the python course done
+
+Enter the name of the employees who have completed the SQL course Neha
+Enter the name of the employees who have completed the SQL course Rahul
+Enter the name of the employees who have completed the SQL course Rohan
+Enter the name of the employees who have completed the SQL course Sneha
+Enter the name of the employees who have completed the SQL course Anjali
+Enter the name of the employees who have completed the SQL course done
+
+Project eligibility report
+
+Python Training Participants
+{'Neha', 'Rahul', 'Pooja', 'Karan', 'Sneha', 'Amit'}
+
+SQL Training Participants
+{'Neha', 'Rahul', 'Rohan', 'Sneha', 'Anjali'}
+
+Employees eligible for project
+{'Neha', 'Rahul', 'Sneha'}
+Total eligible employees: 3
+```
 
 
 
