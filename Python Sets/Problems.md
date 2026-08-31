@@ -810,6 +810,23 @@ Enter customer who made purchases CY:  done
 Total Inactive customers: 2
 ```
 
+Interview Questions
 
+Q1. What does the difference() method do?
+Ans: The difference method returns a new set containing elements that are present in the first set but not in the second set and vice versa. The difference method compares the 2 sets and displays the elements that uncommon from the first and the second set. This method will not modify the original sets.
+
+Q2. Why is difference() useful in customer retention analysis?
+Ans: The difference() method is useful because it specifies the difference between the two datasets. The difference method is useful in customer retention analysis becuase it helps identify customers who have purchased in the previous year but did not make any purchase this year. These customers may have stopped buying from the company or switched to competitors. The business can use this information to launch customer retention campaigns, offer discounts or send personalized promotions to encourage them to retrun. 
+
+Q3. If a customer appears in both years, will they appear in the difference?
+Ans: No, if the customer appears in both previous year and current year, they will not appear in difference because the difference() method only displays the customers that are present in set A but absent in set B. Customers that are common to both the sets are removed from the result.
+
+Q4. What is the difference between union() and difference()?
+Ans: The union() method combines two or more sets and returns a new set containing all unique elements from those sets. The difference() method returns a new set containing only the elements that are present in the first set but absent from the second set. Unlike union(), difference() is directional so changing the order of the set changes the result.
+
+Q5. Give another business use case for difference()?
+Ans: A real world use case would be the use of difference() method in banking. Suppose a bank issues credit cards to customers in January and wants to identify customers who have not activated their cards in February. By performing jan.difference(feb) the bank can identify customers who were issued cards but did not activate them. This helps bank to launch reminder campaigns or offer incentives to increase card activation rates.
+
+Problem 11: 
 
 
