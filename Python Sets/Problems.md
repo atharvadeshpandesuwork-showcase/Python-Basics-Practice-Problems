@@ -730,7 +730,85 @@ Employees eligible for project
 Total eligible employees: 3
 ```
 
+Problem 10: You have joined Prime Mart Retail Pvt ltd as a Junior Data Analyst. The company wants to identify customers who have purchased products last year but did not make any purchases this year. The marketing team believes that these customers may have switched to its competitors. To improve customer retention they want to launch a "Win Back Campaign" offering special discounts to these customers.
 
+The company has two customer databases:
+- Last year's Customers
+- This year's customers
+Your task is to identify customers who have made purchases in the last year and not this year. Instead of manually comparing both the customer lists your manager has asked to use the python's difference() method. Business Question: "Which customer purchased last year but did not purchase this year?"
+
+Sample Output
+```Text
+Customer Retention Report
+
+Last Year's Customers
+{...}
+
+This Year's Customers
+{...}
+
+Inactive Customers
+{...}
+
+Total Inactive Customers: X
+```
+
+Solution
+```python
+ly_customer = set()
+cy_customer = set()
+
+while True:
+    customer = str(input("Enter customer who made purchases LY: "))
+    if customer.lower() == "done":
+        break
+    ly_customer.add(customer)
+
+while True:
+    customer_cy = str(input("Enter customer who made purchases CY: "))
+    if customer_cy.lower() == "done":
+        break
+    cy_customer.add(customer_cy)
+print("\n Customer retention report")
+print("\n Last Year Customers")
+print(ly_customer)
+print("\n Current Year Customers")
+print(cy_customer)
+print("\n Inactive customers")
+inactive_customers = cy_customer.difference(ly_customer)
+print(f"\n {inactive_customers}")
+print(f"Total Inactive customers: {len(inactive_customers)}")
+```
+
+```Text
+Enter customer who made purchases LY:  Atharva
+Enter customer who made purchases LY:  Anjali
+Enter customer who made purchases LY:  Sujat
+Enter customer who made purchases LY:  Usha
+Enter customer who made purchases LY:  done
+
+Enter customer who made purchases CY:  Kshitij
+Enter customer who made purchases CY:  Ratna
+Enter customer who made purchases CY:  Atharva
+Enter customer who made purchases CY:  Anjali
+Enter customer who made purchases CY:  Sujat
+Enter customer who made purchases CY:  Usha
+Enter customer who made purchases CY:  done
+
+ Customer retention report
+
+ Last Year Customers
+{'Atharva', 'Anjali', 'Sujat', 'Usha'}
+
+ Current Year Customers
+{'Atharva', 'Usha', 'Kshitij', 'Sujat', 'Anjali', 'Ratna'}
+
+ Inactive customers
+
+ {'Kshitij', 'Ratna'}
+
+Total Inactive customers: 2
+```
 
 
 
