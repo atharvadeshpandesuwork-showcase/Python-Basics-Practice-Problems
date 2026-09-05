@@ -826,7 +826,3 @@ Ans: The union() method combines two or more sets and returns a new set containi
 
 Q5. Give another business use case for difference()?
 Ans: A real world use case would be the use of difference() method in banking. Suppose a bank issues credit cards to customers in January and wants to identify customers who have not activated their cards in February. By performing jan.difference(feb) the bank can identify customers who were issued cards but did not activate them. This helps bank to launch reminder campaigns or offer incentives to increase card activation rates.
-
-Problem 11: 
-
-
