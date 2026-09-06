@@ -125,8 +125,21 @@ Price: 1000
 
 Interview Questions
 
-Why is a dictionary a better choice than a list for storing product prices?
-What is the key and what is the value in this program?
-How do you retrieve the price of a product from a dictionary?
-What happens if you add the same product name twice?
-Why are unique keys important in a dictionary?
+Q1. Why is a dictionary a better choice than a list for storing product prices?
+Ans: A dictionary is a better choice than list for storing products because:
+- Every product has an associated key and every key in the dictionary must be unique. If the same key is entered again, Python updates the existing value instead of creating a duplicate key. 
+- If 2 different products have the same price, there is a less chance of confusion because we retrieve the price using the name(key), not searching for the price itself.
+- If the data is stored in a list duplicate price could make it difficult to identify which product has a particular price belongs to without additional searching.
+- Since dictionary keys are unique duplicate records for the same products are avoided. If a product is entered again its price is updated rather than creating another record. This helps maintain consistent and non-redundant product information. 
+
+Q2. What is the key and what is the value in this program?
+Ans: In this program the product name is used as the key and the price is stored as its corresponding value. The key uniquely identifies each product while the value represents the price associated with that product.
+
+Q3. How do you retrieve the price of a product from a dictionary?
+Ans: The price of the product is retrieved from a dictionary using its key. We use the get() method and pass the product name as an argument. The method returns the value associated with that key which is the products price. 
+
+Q4. What happens if you add the same product name twice?
+Ans: If the same product name (key) is added again Python does not create a duplicate entry. Instead it updates the value associated with that key. The previous value will be replaced with the new value.
+
+Q5. Why are unique keys important in a dictionary?
+Ans: Unique keys are important because each key uniquely identifies a value in the dictionary. If the same key is added again Python updates the existing value instead of creating a new entry. This prevents duplicate keys and ensures that each record has a unique identifier and avoids inconsistencies caused by having multiple entries for the same key. However if a key is overwritten accidentally the previous value is lost.  
