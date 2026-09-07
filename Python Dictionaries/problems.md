@@ -142,4 +142,73 @@ Q4. What happens if you add the same product name twice?
 Ans: If the same product name (key) is added again Python does not create a duplicate entry. Instead it updates the value associated with that key. The previous value will be replaced with the new value.
 
 Q5. Why are unique keys important in a dictionary?
-Ans: Unique keys are important because each key uniquely identifies a value in the dictionary. If the same key is added again Python updates the existing value instead of creating a new entry. This prevents duplicate keys and ensures that each record has a unique identifier and avoids inconsistencies caused by having multiple entries for the same key. However if a key is overwritten accidentally the previous value is lost.  
+Ans: Unique keys are important because each key uniquely identifies a value in the dictionary. If the same key is added again Python updates the existing value instead of creating a new entry. This prevents duplicate keys and ensures that each record has a unique identifier and avoids inconsistencies caused by having multiple entries for the same key. However if a key is overwritten accidentally the previous value is lost.
+
+Problem 3: You have joined ABC Technologies as a junior data analyst. The Hr department maintains salary records of employees. Managers frequently ask Hr questions like: 
+- What is rahuls salary ?
+- How much does amit earn ?
+Instead of searching through excel sheets manually HR wants a Python program that can quickly retrieve an employees salary using employee's name. Your task is to build this system using a dictionary.
+
+Sample Input
+```Text
+Enter number of employees: 4
+Rahul: 65000
+Amit: 55000
+Neha: 72000
+Pooja: 60000
+
+Enter employee name: Neha
+```
+
+Sample Output
+```Text
+Employee Salary Database
+
+{'Rahul': 65000,
+ 'Amit': 55000,
+ 'Neha': 72000,
+ 'Pooja': 60000}
+
+Employee Salary Report
+
+Employee Name: Neha
+Salary: ₹72000
+```
+
+Solution
+
+```Python
+
+total_employees = int(input("Enter the number of employees: "))
+employee_details = dict()
+for i in range(total_employees):
+    employee_name = str(input(f"Enter the name of employee{i+1}: "))
+    employee_salary = int(input(f"Enter the salary of employee{i+1}: "))
+    employee_details[employee_name] = employee_salary
+print("\n Employee salary database")
+print(employee_details)
+print("Employee Salary database")
+record = str(input("Enter the employee name whose salary needs to be retrieved: "))
+print(f"Employee name: {record}")
+print(f"Employee salary: {employee_details.get(record)}")
+```
+
+```Text
+Enter the number of employees:  2
+
+Enter the name of employee1:  Atharva
+Enter the salary of employee1:  5000
+
+Enter the name of employee2:  Sujat
+Enter the salary of employee2:  6000
+
+ Employee salary database
+{'Atharva': 5000, 'Sujat': 6000}
+
+Employee Salary database
+
+Enter the employee name whose salary needs to be retrieved:  Atharva
+
+Employee name: Atharva
+Employee salary: 5000
+```
