@@ -228,3 +228,38 @@ Ans: Updating by key is efficient in dictionaries because dictionaries allow dir
 
 Q5. In what business scenarios would updating dictionary values be useful?
 Ans: A good business case is a laptop store where the prices of models of laptop change frequently due to market demand or supplier costs. The laptop model can be used as a key and the price as value. Whenever the price changes the dictionary can be updated using the same key ensuring the latest price is stored without creating duplicate records. This helps maintain accurate and consistent pricing information.
+
+Problem 4: You are working as a junior data analyst at bright future academy, which conducts internal assessments of students. The academic department currently stores student performance information in Python dictionary. Each students name is used as the key while their overall assessment score is store as the value. 
+Example:
+
+student_marks = {
+    "Rahul": 85,
+    "Amit": 92,
+    "Neha": 78,
+    "Sneha": 90
+}
+
+The management wants a simple reporting program that can present this information in different ways. They want to know:
+- Which students are included in the assesment?
+- What marks have been recorded?
+- What marks belong to each student?
+
+You will use this dictionary methods to generate these different views of the same dataset. Build a student performance reporting using a dictionary. Your program should allow the academic department to enter student records and then generate a structured report.
+
+Sample Output
+```Text
+Student Performance Database
+{'Rahul': 85, 'Amit': 92, 'Neha': 78, 'Sneha': 90}
+
+Students Participating in Assessment
+dict_keys(['Rahul', 'Amit', 'Neha', 'Sneha'])
+
+Assessment Marks
+dict_values([85, 92, 78, 90])
+
+Student Performance Report
+Rahul: 85
+Amit: 92
+Neha: 78
+Sneha: 90
+```
