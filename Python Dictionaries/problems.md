@@ -263,3 +263,49 @@ Amit: 92
 Neha: 78
 Sneha: 90
 ```
+
+Solution
+
+```Python
+student_count = int(input("Enter the number of students"))
+student_details = dict()
+for i in range(student_count):
+    student_name = str(input(f"Enter the name of the student {i+1}: "))
+    student_marks = int(input(f"Enter the marks of student {i+1}: "))
+    student_details[student_name] = student_marks
+print("Student performance database")
+print(student_details)
+print()
+print("Students Participating in assesment")
+print(f"dict_keys: {student_details.keys()}")
+print()
+print("Assesment Marks")
+print(f"dict_values: {student_details.values()}")
+print()
+print("Student performance report")
+for student_name,student_marks in student_details.items():
+    print(f"{student_name}:{student_marks}")
+```
+
+```Text
+Enter the number of students 2
+
+Enter the name of the student 1:  Rahul
+Enter the marks of student 1:  85
+
+Enter the name of the student 2:  Amit
+Enter the marks of student 2:  92
+
+Student performance database
+{'Rahul': 85, 'Amit': 92}
+
+Students Participating in assesment
+dict_keys: dict_keys(['Rahul', 'Amit'])
+
+Assesment Marks
+dict_values: dict_values([85, 92])
+
+Student performance report
+Rahul:85
+Amit:92
+```
