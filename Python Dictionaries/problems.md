@@ -212,3 +212,19 @@ Enter the employee name whose salary needs to be retrieved:  Atharva
 Employee name: Atharva
 Employee salary: 5000
 ```
+
+Q1. How to update the value of the existing key?
+Ans: To update the value of an existing key in a dictionary use the assignment operator with the key. If the key already exists python replaces the old value with the new value. 
+Example: employee_salary['Rahul'] = 70000
+
+Q2. What happens if you update a key that already exists?
+Ans: If a key already exist in a dictionary we assign a new value to it, Python updates the value associated with the key. The previous value is overwritten and no duplicate key is created.
+
+Q3. Can dictionaries have duplicate values after an update?
+Ans: No. A dictionary cannot have duplicate keys. If a new value is assigned to an existing key Python updates the value associated with that key instead of creating another key. As a result the old value is replaced and the dictionary continues to only contain one instance of that key.
+
+Q4. Why is updating by key efficient?
+Ans: Updating by key is efficient in dictionaries because dictionaries allow direct access to values using their keys. There is no need to search through all the records to find the correct entry. This makes updates faster and maintain accurate and consistent data by modifying the intended record.
+
+Q5. In what business scenarios would updating dictionary values be useful?
+Ans: A good business case is a laptop store where the prices of models of laptop change frequently due to market demand or supplier costs. The laptop model can be used as a key and the price as value. Whenever the price changes the dictionary can be updated using the same key ensuring the latest price is stored without creating duplicate records. This helps maintain accurate and consistent pricing information.
