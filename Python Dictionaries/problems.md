@@ -309,3 +309,92 @@ Student performance report
 Rahul:85
 Amit:92
 ```
+
+Problem 5: You are working as a junior data analyst for a coaching institute. The institute wants to analyze the performance of its students using python. You have received the following student marks data. In this data the key represents the name of the students and each value represents the marks scored out of 100. Write a program to do the following:
+- Print the name of the student who have passed (marks >=40) ?
+- Print name of the students who failed (marks < 40) ?
+- Calculate the average marks ?
+- Find the student with max marks ?
+- Find the student with lowest marks ?
+- Calculate the students who have passed ?
+
+Solution:
+```Python
+student_count = int(input("Enter the number of students"))
+student_details = dict()
+total_marks = 0 
+highest_marks = 0 
+lowest_marks= 101  
+pass_counter = 0
+highest_student = ""
+lowest_student = ""
+
+for i in range(student_count):
+    student_name = str(input(f"Enter the name of student {i+1}: "))
+    student_marks = int(input(f"Enter marks of student {i+1}: "))
+    student_details[student_name] = student_marks
+print()
+print("Passed Students")
+for student_name,student_marks in student_details.items():
+    if student_marks >=40:
+        print(f"{student_name} - {student_marks}")
+        pass_counter = pass_counter + 1
+print()
+print("Failed Students")
+for student_name,student_marks in student_details.items():
+    if student_marks < 40:
+        print(f"{student_name} - {student_marks}")
+print()
+print("Average Marks")
+for student_name, student_marks in student_details.items():
+    total_marks = total_marks + student_marks
+average_marks = total_marks / student_count
+print(f"Average marks scored: {average_marks}")
+print()
+
+for student_name, student_marks in student_details.items():
+    if student_marks < lowest_marks:
+        lowest_marks = student_marks
+        lowest_student = student_name
+print(f"Lowest Performer: {lowest_student} ")
+print(f"Marks: {lowest_marks}")
+
+print()
+for student_name, student_marks in student_details.items():
+    if student_marks > highest_marks:
+        highest_marks = student_marks
+        highest_student = student_name
+print(f"Highest Performer: {highest_student} ")
+print(f"Marks: {highest_marks}")
+print()
+print("Percentage Students passed")
+passed_count = (pass_counter / student_count) * 100
+print(f"Students passed {passed_count}%")
+```
+
+``Text
+Enter the number of students 2
+Enter the name of student 1:  Atharva
+Enter marks of student 1:  55
+Enter the name of student 2:  Sujay
+Enter marks of student 2:  60
+
+Passed Students
+Atharva - 55
+Sujay - 60
+
+Failed Students
+
+Average Marks
+Average marks scored: 57.5
+
+Lowest Performer:  
+Marks: 0
+
+Highest Performer: Sujay 
+Marks: 60
+
+Percentage Students passed
+Students passed 100.0%
+```
+
