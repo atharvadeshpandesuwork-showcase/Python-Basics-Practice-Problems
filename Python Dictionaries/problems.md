@@ -373,6 +373,7 @@ print(f"Students passed {passed_count}%")
 ```
 
 ``Text
+
 Enter the number of students 2
 Enter the name of student 1:  Atharva
 Enter marks of student 1:  55
