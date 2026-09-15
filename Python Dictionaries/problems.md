@@ -372,7 +372,7 @@ passed_count = (pass_counter / student_count) * 100
 print(f"Students passed {passed_count}%")
 ```
 
-``Text
+```Text
 
 Enter the number of students 2
 Enter the name of student 1:  Atharva
@@ -399,3 +399,264 @@ Percentage Students passed
 Students passed 100.0%
 ```
 
+Problem 6: You are working as a junior data analyst at a professional training institute. The institute conducts multiple courses to help students develop technical skills. The management has collected marks for 2 students in subjects: Mathematics and Python. The management wants to analyze student performance and identify students who are performing well and students who need additional support. You have been asked to build a Python based student performance analysis program using a nested dictionary.
+
+Sample Data
+
+```Text
+student_details = {
+    "Atharva": {"Maths": 85, "Python": 78},
+    "Rahul": {"Maths": 72, "Python": 91},
+    "Sneha": {"Maths": 95, "Python": 89},
+    "Priya": {"Maths": 68, "Python": 74},
+    "Amit": {"Maths": 35, "Python": 42}
+}
+```
+
+Understanding the structure:
+- The outer dictionary only stores the names of the students ?
+- The inner dictionary stores the marks for python and mathematics for every student ?
+
+ The institute wants you to do the following analysis:
+ - Calculate the total marks for every student?
+ - Calculate the average marks for every student?
+ - find the highest and lowest average marks of students?
+ - The number students who have passed? (criteria: Math's >= 40 AND Python >= 40)
+ - Identify the student who at least passed in one subject? (Criteria: Math's < 40 OR Python < 40)
+ - Find out the student who performed in each subject?
+
+Solution:
+```Python
+student_count = int(input("Enter the number of students"))
+student_details = dict()
+
+highest_marks = 0
+lowest_marks = 101
+
+highest_python_marks = 0
+highest_maths_marks = 0
+
+highest_python_student = ""
+highest_maths_student = ""
+
+for i in range(student_count):
+    student_name = input(f"Enter the name of student {i+1}:")
+    subject_marks = dict()
+    maths_marks = int(input(f"Enter mathematics marks of student {i+1}: "))
+    python_marks = int(input(f"Enter python marks of student {i+1}: "))
+    subject_marks["Maths"] = maths_marks
+    subject_marks["Python"] = python_marks
+    student_details[student_name] = subject_marks
+
+for student_name, subject_marks in student_details.items():
+    total_marks =  subject_marks["Maths"] + subject_marks["Python"]
+    average_marks = total_marks / 2
+    print(f"{student_name} - Total Marks: {total_marks}")
+    print(f"{student_name} - Average Marks: {average_marks}")
+    
+    if average_marks > highest_marks:
+        highest_marks = average_marks
+        highest_student = student_name
+    
+    if average_marks < lowest_marks:
+        lowest_marks = average_marks
+        lowest_student = student_name
+
+    if subject_marks["Maths"] > highest_maths_marks:
+        highest_maths_marks = subject_marks["Maths"]
+        highest_maths_student = student_name
+
+    if subject_marks["Python"] > highest_python_marks:
+        highest_python_marks = subject_marks["Python"]
+        highest_python_student = student_name
+
+print(f"Highest Maths Performer: {highest_maths_student}")
+print(f"Marks Scored: {highest_maths_marks}")
+
+print(f"Highest Python Performer: {highest_python_student}")
+print(f"Marks Scored: {highest_python_marks}")
+
+print("Students passed in both subjects")
+for student_name, subject_marks in student_details.items():
+    if subject_marks["Maths"] >=40 and subject_marks["Python"] >=40:
+        print(f"{student_name}")
+
+print("Students failed in atleast one subject")
+for student_name, subject_marks in student_details.items():
+    if subject_marks["Maths"] < 40 or subject_marks["Python"] < 40:
+        print(f"{student_name}")
+
+print(f"Highest Average: {highest_student} - {highest_marks}")
+print(f"Lowest Average: {lowest_student} - {lowest_marks}")
+```
+
+```Text
+Enter the number of students 2
+
+Enter the name of student 1: Atharva
+Enter mathematics marks of student 1:  55
+Enter python marks of student 1:  60
+
+Enter the name of student 2: Sujat
+Enter mathematics marks of student 2:  70
+Enter python marks of student 2:  20
+
+Atharva - Total Marks: 115
+Atharva - Average Marks: 57.5
+
+Sujat - Total Marks: 90
+Sujat - Average Marks: 45.0
+
+Highest Maths Performer: Sujat
+Marks Scored: 70
+
+Highest Python Performer: Atharva
+Marks Scored: 60
+
+Students passed in both subjects
+Atharva
+
+Students passed in atleast one subject
+Sujat
+
+Highest Average: Atharva - 57.5
+Lowest Average: Sujat - 45.0
+```
+
+Problem 7: You work as a data analyst for an e-commerce company. The company wants to analyze how different products are performing across different Sales and Customer Ratings. Each product has: Total sales units and customer rating.
+Sample Data
+
+```Text
+product_details = {
+    "Laptop": {"Sales": 150, "Rating": 4.5},
+    "Headphones": {"Sales": 320, "Rating": 4.2},
+    "Smartwatch": {"Sales": 210, "Rating": 4.7},
+    "Keyboard": {"Sales": 180, "Rating": 3.9}
+}
+```
+
+Build a dictionary dynamically using user input and then do the following analysis:
+- Find the product with highest sales?
+- Find the product with lowest sales?
+- Find the product with highest customer rating?
+- Find the product with lowest customer rating?
+- Find average sales across all products?
+- Find average customer rating across all products?
+- Find products that have: Sales ≥ 200 AND Rating ≥ 4.0
+- Find products that have: Sales < 200 OR Rating < 4.0
+
+Solution:
+```Python
+product_count = int(input("Enter the number of products"))
+total_sales = 0
+total_ratings = 0
+average_sales = 0
+average_ratings = 0
+product_details = dict()
+first_product = True
+first_rating = True
+high_selling_products = ""
+low_selling_products = ""
+
+for i in range(product_count):
+    product_name = input(f"Enter the name of Product {i+1}: ")
+    product_info = dict()
+    
+    sales_entry = int(input(f"Enter number of units sold for {product_name}: "))
+    rating_entry = float(input(f"Enter ratings for {product_name}"))
+    
+    product_info["Sales"] = sales_entry
+    product_info["Customer_Rating"] = rating_entry
+    product_details[product_name] = product_info
+
+for product_name, product_info in product_details.items():
+
+# Categorization of product sales (Sales Analysis)
+    sales = product_info["Sales"]
+    
+    if first_product == True:
+        highest_product = sales
+        highest_product_name = product_name
+        lowest_product = sales
+        lowest_product_name = product_name
+        first_product = False
+        
+    if sales > highest_product:
+        highest_product = sales
+        highest_product_name = product_name
+
+    if sales < lowest_product:
+        lowest_product = sales
+        lowest_product_name = product_name
+
+# Categorization of customer ratings (Customer Review Analysis)
+    ratings = product_info["Customer_Rating"]
+    
+    if first_rating == True:
+        highest_rating = ratings
+        high_product_record = product_name
+        lowest_rating = ratings
+        low_product_record = product_name
+        first_rating = False
+        
+    if ratings > highest_rating:
+        highest_rating  = ratings
+        high_product_record = product_name
+    
+    if ratings < lowest_rating:
+        lowest_rating = ratings
+        low_product_record = product_name
+
+    if product_info["Sales"] >= 200 and product_info["Customer_Rating"] >= 4.0:
+    high_selling_products = high_selling_products + product_name + ", "
+
+    if product_info["Sales"] < 200 or product_info["Customer_Rating"] < 4.0:
+        low_selling_products = low_selling_products + product_name + ", "
+
+# Average Product Sales
+total_sales = total_sales + product_info["Sales"]
+average_sales = total_sales / product_count 
+
+# Average Customer rating
+total_ratings = total_ratings + product_info["Customer_Rating"]
+average_ratings = total_ratings / product_count
+
+print()
+print(f"Product with highest sales {highest_product_name} - {highest_product} units")
+print(f"Product with lowest sales {lowest_product_name} - {lowest_product} units")
+
+print()
+print(f"Highest Customer rating {high_product_record} - {highest_rating}")
+print(f"Lowest Customer rating {low_product_record} - {lowest_rating}")
+
+print()
+print(f"Average Sales: {average_sales}")
+print(f"Average rating {average_ratings}")
+
+print()
+print(f"High Selling Products {high_selling_products}")
+print(f"Low Selling Products {low_selling_products}")
+```
+
+```Text
+Enter the number of products 2
+Enter the name of Product 1:  Laptop
+Enter number of units sold for Laptop:  150
+Enter ratings for Laptop 4.5
+Enter the name of Product 2:  Headphones
+Enter number of units sold for Headphones:  320
+Enter ratings for Headphones 4.2
+
+Product with highest sales Headphones - 320 units
+Product with lowest sales Laptop - 150 units
+
+Highest Customer rating Laptop - 4.5
+Lowest Customer rating Headphones - 4.2
+
+Average Sales: 160.0
+Average rating 2.1
+
+High Selling Products Headphones
+Low Selling Products 
+```
+ 
