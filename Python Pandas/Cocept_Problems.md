@@ -37,9 +37,11 @@ df[["Name", "Salary"]]  # DataFrame
 ```
 
 Q4. How do you check the datatype of the columns ?
+
 Ans: The dtypes attribute is used to view the data type of each column in a Data Frame. The info() method provides a summary of the dataframe including column names, non-null values 
 and data types.
 
 Q5. What is the difference between iloc and loc?
+
 Ans: loc is used for label based indexing with iloc is used for integer-position based indexing. loc selects the data using row and column labels whereas iloc selects 
 based on numerical positions.
