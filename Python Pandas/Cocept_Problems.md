@@ -45,3 +45,31 @@ Q5. What is the difference between iloc and loc?
 
 Ans: loc is used for label based indexing with iloc is used for integer-position based indexing. loc selects the data using row and column labels whereas iloc selects 
 based on numerical positions.
+
+Problem 1: You are working as a junior data analyst for a company. The HR department has provided with employee salary information and wants quick analysis of the current workforce. The HR manager wants to identify employees with higher salaries, understand the average salary of employees and examine the salary differences between departments. You have been given the following employee data:
+
+| Employee_ID | Employee_Name | Department | Experience | Salary |
+|-------------:|---------------|------------|-----------:|-------:|
+| 101 | Amit   | IT      | 2 | 35000 |
+| 102 | Rahul  | Finance | 5 | 52000 |
+| 103 | Sneha  | IT      | 4 | 48000 |
+| 104 | Priya  | HR      | 3 | 40000 |
+| 105 | Rohan  | Finance | 7 | 65000 |
+| 106 | Neha   | IT      | 6 | 72000 |
+| 107 | Karan  | HR      | 5 | 55000 |
+| 108 | Anjali | IT      | 3 | 42000 |
+| 109 | Vikas  | Finance | 2 | 38000 |
+| 110 | Meera  | HR      | 8 | 68000 |
+
+Business Questions
+
+- Create a pandas dataframe for the above data?
+- Display basic information about the dataframe?
+- Display the employee name, department, and salary?
+- Find all employees whose salary is greater than 50,000
+- Find all the employees working in the IT deaprtment?
+- Find all employees working in IT department and have experience greater than 5 years?
+- Find the employee with highest salary?
+- Find the employee with lowest salary?
+- Calculate the average salary of all the employees?
+- Sort the employees from highest salary to lowest saalry?
