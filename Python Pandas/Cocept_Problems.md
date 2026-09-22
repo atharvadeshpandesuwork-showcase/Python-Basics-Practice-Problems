@@ -73,3 +73,63 @@ Business Questions
 - Find the employee with lowest salary?
 - Calculate the average salary of all the employees?
 - Sort the employees from highest salary to lowest saalry?
+
+Solution:
+```Python
+# Creating data frame
+import pandas as pd
+
+df = pd.DataFrame({
+    "Employee_ID":[
+        101,102,103,104,105,
+        106,107,108,109,110
+    ],
+    "Employee_Name":[
+        "Amit","Rahul","Sneha","Priya","Rohan",
+        "Neha","Karan","Anjali","Vikas","Meera"
+    ],
+    "Department":[
+        "IT","Finance","IT","HR","Finance",
+        "IT","HR","IT","Finance","HR"
+    ],
+    "Experience":[
+        2,5,4,3,7,
+        6,5,3,2,8
+    ],
+    "Salary":[
+        35000,52000,48000,40000,65000,
+        72000,55000,42000,38000,68000
+    ]
+})
+
+# Basic information about the dataset.
+df.info()
+df.shape
+
+# Display employee name salary and department columns.
+df.loc[:,["Employee_Name","Department","Salary"]]
+
+# Employee whose salary is greater than 50,000.
+df.loc[df['Salary'] > 50000]
+
+# Employees working in IT department.
+df.loc[df['Department'] == 'IT']
+
+# Employee working in IT department and have experience greater than 5 years.
+df.loc[(df['Department'] == 'IT') & (df['Experience'] > 5)]
+
+# Employee with highest salary.
+df.loc[df['Salary'] == df['Salary'].max()]
+
+# Employee with lowest salary.
+df.loc[df['Salary'] == df['Salary'].min()]
+
+# Calculate average salary of employees
+df['Salary'].mean()
+
+# Sort employee salaries from highest to lowest
+sorted_df = df.sort_values(by = ['Salary'], ascending = [False])
+sorted_df
+```
+
+Problem 2:  
