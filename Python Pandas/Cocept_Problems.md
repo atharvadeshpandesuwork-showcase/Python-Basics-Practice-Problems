@@ -132,4 +132,98 @@ sorted_df = df.sort_values(by = ['Salary'], ascending = [False])
 sorted_df
 ```
 
-Problem 2:  
+Problem 2: You are working as Junior data analyst at a retail company that operates stores across different cities. The sales manager wants to understand how different products are performing and which transactions are generating significant revenue. You have been given a small dataset containing information about customer purchases. Your task is to analyze the data using pandas and answer the questions given below:
+
+| Transaction_ID | Customer | City   | Product    | Category     | Quantity | Unit_Price |
+|---------------:|----------|--------|------------|--------------|---------:|-----------:|
+| 201 | Amit   | Mumbai | Laptop     | Electronics  | 1 | 55000 |
+| 202 | Priya  | Pune   | Mouse      | Accessories  | 3 | 800 |
+| 203 | Rahul  | Delhi  | Mobile     | Electronics  | 2 | 25000 |
+| 204 | Sneha  | Mumbai | Keyboard   | Accessories  | 2 | 1500 |
+| 205 | Karan  | Pune   | Laptop     | Electronics  | 1 | 55000 |
+| 206 | Neha   | Delhi  | Headphones | Accessories  | 4 | 2000 |
+| 207 | Rohan  | Mumbai | Mobile     | Electronics  | 1 | 25000 |
+| 208 | Anjali | Pune   | Monitor    | Electronics  | 2 | 18000 |
+| 209 | Vikas  | Delhi  | Mouse      | Accessories  | 5 | 800 |
+| 210 | Meera  | Mumbai | Tablet     | Electronics  | 1 | 30000 |
+
+Business Questions
+- The manager wants to see only the following information: Customer, City, Product, Quantity. Display these columns?
+- The manager wants to investigate the transactions that occurred in mumbai?
+- Find all the transactions where the customer purchased a laptop?
+- The manager wants to identify customers who have purchased more than 2 units in a single transaction. Display those transactions?
+- The manager wants to identify electronic transactions from Mumbai where the quantity purchased is greater than 1. Display the matching transactions?
+- The company defines total_sales = quantity * unit price create a new column called as total sales?
+- After creating Total_Sales identify the transaction that generated highest total sales amount. Return the complete transaction information?
+- The manager wants to see transactions arranged from highest total_sales to lowest total_sales. Sort the dataframe accordingly?
+- The manager asks: "Which customer generated the highest value single transaction and what product did they purchase?". Provide the answer using the dataframe?
+
+Solution:
+```Python
+# Creating Data Frame
+import pandas as pd
+df = pd.DataFrame({
+    "Transaction_ID":[
+        201,202,203,204,205,
+        206,207,208,209,210
+    ],
+    "Customer":[
+        "Amit","Priya","Rahul","Sneha","Karan",
+        "Neha","Rohan","Anjali","Vikas","Meera"
+    ],
+    "City":[
+        "Mumbai","Pune","Delhi","Mumbai","Pune",
+        "Delhi","Mumbai","Pune","Delhi","Mumbai"
+    ],
+    "Product":[
+        "Laptop","Mouse","Mobile","Keyboard","Laptop",
+        "Headphones","Mobile","Monitor","Mouse","Tablet"
+    ],
+    "Category":[
+        "Electronics","Accessories","Electronics","Accessories","Electronics",
+        "Accessories","Electronics","Electronics","Accessories","Electronics"
+    ],
+    "Quantity":[
+        1,3,2,2,1,
+        4,1,2,5,1
+    ],
+    "Unit_Price":[
+        55000,800,25000,1500,55000,
+        2000,25000,18000,800,30000
+    ]
+})
+
+# Displaying data from Customer, City, Poroduct, Quantity columns
+df.loc[:,['Customer','City','Product','Quantity']]
+
+# Transactions done in mumbai
+df.loc[df['City']=='Mumbai',:]
+
+# Customers who purchased a laptop
+df.loc[df['Product'] == 'Laptop',:]
+
+# Customer who purchased more than 2 quantity in a single transaction
+df.loc[df['Quantity'] > 2,:]
+
+# Customers who purchased electonics from mumbai greater than 1 quantity
+df.loc[(df['City'] == 'Mumbai')& (df['Category'] == 'Electronics') & (df['Quantity'] > 1),:]
+
+# Adding total sales column
+df['Total_Sales'] = df['Quantity'] * df['Unit_Price']
+df
+
+# Transaction that generated highest sales
+df.loc[df['Total_Sales'] == df['Total_Sales'].max()]
+
+# Transaction that generated lowest sales
+df.loc[df['Total_Sales'] == df['Total_Sales'].min()]
+
+# Sorted data frame from highest to lowest sales
+sorted_df = df.sort_values(by = ['Total_Quantity'], ascending = [False])
+sorted_df
+
+# Which customer generated the highest value single transaction and what product did they purchase?
+df.loc[df['Total_Sales'] == df['Total_Sales'].max(),['Customer','Product','Category','Total_Sales']]
+```
+
+Problem 3: 
