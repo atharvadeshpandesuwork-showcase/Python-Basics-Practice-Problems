@@ -226,4 +226,124 @@ sorted_df
 df.loc[df['Total_Sales'] == df['Total_Sales'].max(),['Customer','Product','Category','Total_Sales']]
 ```
 
-Problem 3: 
+Problem 3: You are working as a Junior Data Analyst for a retail company that sells electronics and accessories from different cities in India. The sales manager has provided you with transaction-level sales data. They want to analyze customer purchases, product performance, transaction values and sales patterns. Your task is to use Pandas to answer the business questions below:
+
+| Order_ID | Customer | City      | Product    | Category    | Quantity | Unit_Price | Payment_Method |
+|----------|----------|-----------|------------|-------------|----------|------------|----------------|
+| 401 | Atharv | Mumbai    | Laptop     | Electronics | 1 | 62000 | UPI |
+| 402 | Riya   | Pune      | Mobile     | Electronics | 2 | 30000 | Credit Card |
+| 403 | Kunal  | Delhi     | Mouse      | Accessories | 4 | 850 | UPI |
+| 404 | Sneha  | Mumbai    | Monitor    | Electronics | 2 | 24000 | Debit Card |
+| 405 | Varun  | Bangalore | Keyboard   | Accessories | 3 | 2000 | UPI |
+| 406 | Meera  | Pune      | Laptop     | Electronics | 1 | 62000 | Credit Card |
+| 407 | Rahul  | Delhi     | Mobile     | Electronics | 3 | 30000 | UPI |
+| 408 | Ananya | Mumbai    | Headphones | Accessories | 2 | 3200 | Cash |
+| 409 | Arjun  | Bangalore | Tablet     | Electronics | 2 | 35000 | Credit Card |
+
+Business Questions
+
+- Create a pandas data frame for the above dataset?
+- Display basic information about the dataset?
+- Display only Customer, City, Product, Quantity?
+- Find all transactions from Mumbai?
+- Find all transactions where customer purchased more then 3 units?
+- Find all electronics transactions where the unit price is greater than 30,000?
+- Find the transactions from Mumbai where the customer purchased more than 1 unit?
+- Create a new column called as total_sales?
+- Find the transactions with highest total sales?
+- Calculate the average total sales per transaction?
+- Sort the data frame from highest total sales to lowest total sales?
+- Find all the transactions where the total sales is greater than 50,000?
+- Which customer made the highest value single transaction and which product did they purchase?
+
+Solution:
+```Python
+import pandas as pd
+df = pd.DataFrame({
+    'Order_ID':[
+        401,402,403,404,405,406,407,408,419,410,
+        411,412,413,414,415,416,417,418,419,420,
+        421,422,423,424,425,426,427,428,429,430
+    ],
+    'Customer':[
+        'Atharv','Riya','Kunal','Sneha','Varun','Meera','Rahul','Ananya','Arjun','Priya',
+        'Rohan','Neha','Yash','Kavya','Aditya','Ishita','Dev','Nisha','Manav','Pooja',
+        'Sahil','Aisha','Varsha','Mohit','Simran','Harsh','Tanvi','Akash','Nandini','Vikram'
+    ],
+    'City':[
+        'Mumbai','Pune','Delhi','Mumbai','Bangalore','Pune','Delhi','Mumbai','Bangalore','Delhi',
+        'Pune','Mumbai','Bangalore','Delhi','Mumbai','Pune','Bangalore','Delhi','Mumbai','Pune',
+        'Delhi','Bangalore','Mumbai','Pune','Delhi','Bangalore','Mumbai','Pune','Delhi','Bangalore'
+    ],
+    'Product':[
+         "Laptop","Mobile","Mouse","Monitor","Keyboard","Laptop","Mobile","Headphones","Tablet","Mouse",
+         "Laptop","Keyboard","Monitor","Mobile","Headphones","Laptop","Tablet","Mouse","Mobile","Keyboard",
+         "Laptop","Monitor","Headphones","Tablet","Mobile","Mouse","Laptop","Keyboard","Monitor","Headphones"
+    ],
+    'Category':[
+        "Electronics","Electronics","Accessories","Electronics","Accessories","Electronics","Electronics","Accessories","Electronics","Accessories",
+        "Electronics","Accessories","Electronics","Electronics","Accessories","Electronics","Electronics","Accessories","Electronics","Accessories",
+        "Electronics","Electronics","Accessories","Electronics","Electronics","Accessories","Electronics","Accessories","Electronics","Accessories"
+    ],
+    'Quantity':[
+        1,1,4,2,3,1,3,2,2,6,
+        2,4,3,1,5,1,3,5,2,3,
+        1,2,3,2,2,7,2,5,2,4
+    ],
+    'Unit_Price':[
+            62000,30000,850,24000,2000,62000,30000,3200,35000,850,
+            62000,2000,24000,30000,3200,62000,35000,850,30000,2000,
+            62000,24000,3200,35000,30000,850,62000,2000,24000,3200
+
+    ],
+    'Payment_Method':[
+        "UPI","Credit Card","UPI","Debit Card","UPI","Credit Card","UPI","Cash","Credit Card","UPI",
+        "Debit Card","Cash","UPI","Credit Card","Cash","Debit Card","UPI","Credit Card","UPI","Cash",
+        "Debit Card","UPI","Credit Card","Cash","UPI","Cash","Credit Card","UPI","Debit Card","Cash"
+    ]
+})
+df
+
+# Basic Information of Dataset
+df.info()
+print('Shape of data')
+df.shape
+
+# Display Customer, City, Product, Quantity
+df.loc[:,['Customer','City','Product','Quantity']]
+
+# Transactions from Mumbai
+df.loc[df['City'] == 'Mumbai']
+
+# Tansactins where qty purchased is greater than 3 units
+df.loc[df['Quantity'] > 3]
+
+# Electronics with price above 30,000
+df.loc[(df['Category'] =='Electronics') & (df['Unit_Price'] > 30000)]
+
+# Customer from Mumbai purchased more than 1 unit
+df.loc[(df['City'] == 'Mumbai') & (df['Quantity'] > 1)]
+
+# Create new column total_Sales
+df['Total_Sales'] = df['Quantity'] * df['Unit_Price']
+df
+
+# Highest Product Sold
+df.loc[df['Total_Sales'] == df['Total_Sales'].max()]
+
+# Lowest Product Sold
+df.loc[df['Total_Sales'] == df['Total_Sales'].min()]
+
+# Average sale per transaction
+df['Total_Sales'].mean()
+
+# Sorting the dataframe based on sales
+sorted_df = df.sort_values(by=['Total_Sales'],ascending = [False])
+sorted_df
+
+# Transactions with sales greater than 50,000
+df.loc[df['Total_Sales'] > 50000]
+
+# Customers who made highest single value transaction
+df.loc[df['Total_Sales'] == df['Total_Sales'].max(),['Order_ID','Customer','Product','Category','Quantity','Unit_Price']]
+```
