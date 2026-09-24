@@ -347,3 +347,38 @@ df.loc[df['Total_Sales'] > 50000]
 # Customers who made highest single value transaction
 df.loc[df['Total_Sales'] == df['Total_Sales'].max(),['Order_ID','Customer','Product','Category','Quantity','Unit_Price']]
 ```
+
+Problem 4: You are working as a data analyst in Credit department of a Bank. The bank receives loan applications from customers every day. Before approving a loan the credit team looks at several factors such as customers monthly income, credit score, existing loan, requested loan amount and loan tenure. The management team currently has a dataset containing information about 15 recent loan applicants. They want you to analyze this data using Pandas and provide useful insights about the banks lending activity.
+
+| Customer_ID | Customer | City | Age | Monthly_Income | Credit_Score | Existing_Loan | Loan_Amount | Loan_Tenure | Loan_Status |
+|-------------|----------|------|-----|----------------|--------------|---------------|-------------|-------------|-------------|
+| 501 | Aarav | Mumbai | 28 | 55000  | 745 | No  | 400000  | 5  | Approved |
+| 502 | Diya | Pune | 35 | 72000  | 680 | Yes | 600000  | 7  | Approved |
+| 503 | Rohan | Delhi | 42 | 48000  | 610 | Yes | 300000  | 5  | Rejected |
+| 504 | Anaya | Mumbai | 31 | 85000  | 790 | No  | 800000  | 10 | Approved |
+| 505 | Kabir | Pune | 26 | 42000  | 655 | No  | 250000  | 5  | Rejected |
+
+Your job is to help answer questions such as:
+- Create a Pandas data frame for the dataset?
+- Display the basic information and shape of the data frame?
+- Display only: Customer, Monthly_Income, Credit_Score, Loan_Amount, Loan_Status?
+- Find all the customers where the credit score is greater than 700?
+- Find all customers whose monthly_Income > 60,000 and Credit_Score > 700?
+- Find all customers whose loan status is rejected?
+- Create a conditional column called as category:
+
+      Credit_Score >= 750: "Excellent"
+      Credit_Score >= 700: and <= 750: "Good"
+      Credit_Score >= 650: and <= 700: "Average"
+      Credit_Score <= 650: "Poor"
+- Display Customer, Credit_Score, Credit_Category?
+- Find the customers whose credit category is excellent?
+- Find the customer with highest credit score?
+- Calculate average monthly income of all customers?
+- Calculate average loan amount of approved customers only?
+- Sort the customers by credit score from highest to lowest?
+- Find customers who: Existing loan =="Yes" and Loan Status =="Approved"
+- Find customers who: Loan_Amount > 500000 and Loan_Status == "Approved"
+       
+      
+      
