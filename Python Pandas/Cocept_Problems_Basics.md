@@ -479,3 +479,88 @@ Problem 5: You are working as a junior data analyst in a e-commerce company that
   ```
 
 - Management also wants to know which products are being purchased in larger quantities. You need to calculate the total quantity sold for each product and arrange the results from highest to lowest?
+
+Solution:
+
+```Python
+#Creating dataframe
+import pandas as pd
+df = pd.DataFrame({
+    'Order_ID':[
+        701,702,703,704,705,706,707,708,709,710,
+        711,712,713,714,715,716,717,718,719,720,
+        721,722,723,724,725,726,727,728,729,730
+    ],
+    'Customer':[
+        'Aarav','Diya','Rohan','Anaya','Kabir','Ishita','Vihaan','Sara','Arjun','Myra',
+        'Reyansh','Tara','Aditya','Kiara','Dev','Meera','Yash','Nisha','Aryan','Riya',
+        'Kunal','Pooja','Manav','Sneha','Varun','Aisha','Rahul','Tanvi','Akash','Nandini'
+    ],
+    'City':[
+        'Mumbai','Pune','Delhi','Mumbai','Pune','Delhi','Mumbai','Pune','Delhi','Mumbai',
+        'Pune','Delhi','Mumbai','Pune','Delhi','Mumbai','Pune','Delhi','Mumbai','Pune',
+        'Delhi','Mumbai','Pune','Delhi','Mumbai','Pune','Delhi','Mumbai','Pune','Delhi'
+],
+    'Product':[
+        'Laptop','Mobile','Mouse','Monitor','Keyboard','Laptop','Mobile','Headphones','Tablet','Mouse',
+        'Laptop','Keyboard','Laptop','Mobile','Headphones','Tablet','Mouse','Monitor','Keyboard','Headphones',
+        'Laptop','Mobile','Tablet','Mouse','Monitor','Keyboard','Mobile','Headphones','Laptop','Tablet'
+    ],
+    'Category':[
+        'Electronics','Electronics','Accessories','Electronics','Accessories','Electronics','Electronics','Accessories','Electronics','Accessories',
+        'Electronics','Accessories','Electronics','Electronics','Accessories','Electronics','Accessories','Electronics','Accessories','Accessories',
+        'Electronics','Electronics','Electronics','Accessories','Electronics','Accessories','Electronics','Accessories','Electronics','Electronics'
+    ],
+    'Quantity':[
+        1,2,3,2,4,1,3,2,2,5,
+        1,2,2,4,3,2,6,2,3,4,
+        2,2,3,5,3,2,2,5,2,3
+    ],
+    'Unit_Price':[
+        65000,28000,900,22000,1800,65000,28000,2500,32000,900,
+        65000,1800,65000,28000,2500,32000,900,22000,1800,2500,
+        65000,28000,32000,900,22000,1800,28000,2500,65000,32000
+    ],
+    'Payment_Method':[
+        'UPI','Credit Card','UPI','Debit Card','UPI','Credit Card','UPI','Cash','Credit Card','UPI',
+        'Debit Card','Cash','Credit Card','UPI','Cash','UPI','Credit Card','Debit Card','UPI','Cash',
+        'Credit Card','UPI','Debit Card','Cash','Credit Card','UPI','Credit Card','Cash','Debit Card','UPI'
+    ]
+})
+
+# Dropping Payment Method Column
+df.drop(columns = 'Payment_Method', inplace = True)
+df
+
+# Adding new customer record and coveting numerical to intgers
+df.loc[30,:] = [731,'Vikram','Mumbai','Laptop','Electronics',1,65000]
+df['Order_ID'] = df['Order_ID'].astype(int)
+df['Quantity'] = df['Quantity'].astype(int)
+df['Unit_Price'] = df['Unit_Price'].astype(int)
+df
+
+# Remove customers who have purchased less than 2 units
+df.drop(index = df.loc[df['Quantity'] < 2].index, inplace = True)
+df
+
+# Rename customer and unit price columns
+df.rename(columns = {"Customer":"Customer_Name"}, inplace = True)
+df.rename(columns = {"Unit_Price":"Price_Per_Unit"}, inplace = True)
+df
+
+# Which cities are present in the dataset
+df['City'].unique()
+
+# How many products are being sold
+df['Product'].unique()
+df['Product'].nunique()
+
+# Count of orders by city
+df.groupby("City").agg({"Order_ID":"count"})
+
+# Product wise quantity sold
+products_df = df.groupby("Product").agg({"Quantity":"sum"})
+products_df
+sorted_df = products_df.sort_values(by = ['Quantity'], ascending = [False])
+sorted_df
+```
