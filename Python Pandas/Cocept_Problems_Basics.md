@@ -381,4 +381,16 @@ Your job is to help answer questions such as:
 - Find customers who: Loan_Amount > 500000 and Loan_Status == "Approved"
        
       
-      
+Problem 5: You are working as a junior data analyst in a e-commerce company that sells electronics and accessories across multiple cities. The company has provided you with a dataset containing individual customer orders. The sales and Management teams want to use this data to understand sales patterns across cities, product categories and products. However, before performing the analysis the dataset needs some basic data cleaning and restructuring. Your task is to use Pandas and perform basic analysis.
+
+- The current analysis does require customer's payment method. You need to remove this column so that the working dataset contains information that is relevant to sales analysis?
+- A new customer order has been received after the original dataset was prepared. You need to add this transaction to the dataframe?
+- The management team wants to analyze orders where customers purchased at least 2 units. Order containing fewer than 2 units should be removed from the analysis?
+- Some column names are not descriptive enough for the company's reporting system. The reporting needs the following changes: "Customer" -> "Customer_Name" and "Unit_Price" -> "Price_Per_Unit". Rename these columns while keeping rest of the data unchanged?
+- Before performing detailed analysis, the management wants to know:
+    ```
+    Which cities are represented in the dataset?
+    How many products are being sold?
+    How many orders are coming from each city?
+    ```
+- Management also wants to know which products are being purchased in larger quantities. You need to calculate the total quantity sold for each product and arrange the results from highest to lowest?
