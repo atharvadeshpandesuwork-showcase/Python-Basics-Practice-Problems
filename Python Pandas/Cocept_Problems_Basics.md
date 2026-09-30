@@ -379,7 +379,90 @@ Your job is to help answer questions such as:
 - Sort the customers by credit score from highest to lowest?
 - Find customers who: Existing loan =="Yes" and Loan Status =="Approved"
 - Find customers who: Loan_Amount > 500000 and Loan_Status == "Approved"
-       
+
+Solution:
+```Python
+#Creating Data Frame
+import pandas as pd
+df = pd.DataFrame({
+    'Customer_ID':[
+        601,602,603,604,605,606,
+        607,608,609,610,611,612
+    ],
+    'Customer':[
+        'Ayaan','Diya','Rohan','Anaya','Kabir','Ishita',   
+        'Vihaan','Sara','Arjun','Myra','Reyansh','Tara'
+    ],
+    'City':[
+        'Mumbai','Pune','Delhi','Mumbai','Pune','Delhi',
+         'Mumbai','Pune','Delhi','Mumbai','Pune','Delhi'
+    ],
+    'Monthly_Income':[
+        65000,48000,42000,90000,55000,75000,
+        38000,82000,61000,45000,95000,52000
+    ],
+    'Credit_Score':[
+        735,680,620,790,710,760,
+        590,775,695,640,805,660
+    ],
+    'Missed_Payment':[
+        0,2,5,0,1,3,
+        6,0,2,4,0,3
+],
+    'Loan_Amount':[
+        500000,300000,250000,800000,450000,600000,
+        200000,700000,400000,280000,1000000,350000
+],
+    'Loan_Status':[
+        'Approved','Approved','Rejected','Approved','Approved','Approved',
+        'Rejected','Approved','Approved','Rejected','Approved','Rejected'
+    ],
+})
+
+# Basic information of the dataset
+df.info()
+df.shape
+
+# Display columns Customer, Credit_Score, Missed_Paymets, Loan_Amount, & Loan_Status
+df.loc[:,['Customer','Credit_Score','Missed_Payment','Loan_Amount','Loan_Status']]
+
+# Customer whose credit_score >= 700
+df.loc[df['Credit_Score'] >= 700]
+
+# Create new column Payment Risk using the following conditions
+def payment_risk(data):
+    if data >= 5:
+        return "Very High Risk"
+    elif data >= 3 and data <= 4:
+        return "High Risk"
+    elif data >= 1 and data <= 2:
+        return "Medium Risk"
+    else:
+        return "Low Risk"
+df['Payment_Risk'] = df['Missed_Payment'].apply(payment_risk)
+
+# Display Customer, Missed_Payments, and Payment_Risk
+df.loc[:,['Customer','Missed_Payment','Payment_Risk']]
+
+# Customers with High Risk
+df.loc[df['Payment_Risk']== 'High Risk']
+
+# Customers with Credit Score < 700 and Loan Status = "Rejected"
+df.loc[(df['Credit_Score'] < 700) & (df['Loan_Status'] == 'Rejected'),['Customer_ID','Customer']]
+
+# Customer with highest Missed Payments
+df.loc[df['Missed_Payment'] == df['Missed_Payment'].max()]
+
+# Calculate Average Loan Amount
+df['Loan_Amount'].mean()
+
+# Customer with loan greater than 500000 
+df.loc[df['Loan_Amount'] > 500000]
+
+# Sort Customers by missed payments in descenfing order
+sorted_df = df.sort_values(by=['Missed_Payment'], ascending = [False])
+sorted_df
+```
       
 Problem 5: You are working as a junior data analyst in a e-commerce company that sells electronics and accessories across multiple cities. The company has provided you with a dataset containing individual customer orders. The sales and Management teams want to use this data to understand sales patterns across cities, product categories and products. However, before performing the analysis the dataset needs some basic data cleaning and restructuring. Your task is to use Pandas and perform basic analysis.
 
@@ -388,9 +471,11 @@ Problem 5: You are working as a junior data analyst in a e-commerce company that
 - The management team wants to analyze orders where customers purchased at least 2 units. Order containing fewer than 2 units should be removed from the analysis?
 - Some column names are not descriptive enough for the company's reporting system. The reporting needs the following changes: "Customer" -> "Customer_Name" and "Unit_Price" -> "Price_Per_Unit". Rename these columns while keeping rest of the data unchanged?
 - Before performing detailed analysis, the management wants to know:
-    ```
+
+  ```
     Which cities are represented in the dataset?
     How many products are being sold?
     How many orders are coming from each city?
-    ```
+  ```
+
 - Management also wants to know which products are being purchased in larger quantities. You need to calculate the total quantity sold for each product and arrange the results from highest to lowest?
