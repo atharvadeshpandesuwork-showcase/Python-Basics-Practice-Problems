@@ -672,3 +672,150 @@ Business Questions
 - The gym wants to identify members who may be highly engaged. Find members who have: Attendance > =20 and Calories_Burned >=7000?
 - Save your final cleaned and transformed data frame as "fitzone_member_analysis.csv"?
 
+Solution:
+```Python
+# Creating Data Frame
+import pandas as pd
+data  = {
+    'Member_ID':[
+        901,902,903,904,905,906,907,908,909,910,911,912,913,914,915,
+        916,917,918,919,920,921,922,923,924,925,926,927,928,929,930
+    ],
+    'Member_Name':[
+        'Aarav','Diya','Rohan','Anaya','Kabir','Ishita','Vihaan','Sara','Arjun','Myra','Reyansh','Tara','Aditya','Kiara','Dev',
+        'Meera','Yash','Nisha','Aryan','Riya','Kunal','Pooja','Manav','Sneha','Varun','Aisha','Rahul','Tanvi','Akash','Nandini'
+    ],
+    'Gender':[
+        'Male','Female','Male','Female','Male','Female','Male','Female','Male','Female','Male','Female','Male','Female','Male',
+        'Female','Male','Female','Male','Female','Male','Female','Male','Female','Male','Female','Male','Female','Male','Female'
+    ],
+    'Age':[
+        24,9,34,26,31,23,28,35,40,27,25,32,29,22,36,
+        30,27,33,24,28,39,25,30,34,26,29,37,31,23,28
+    ],
+    'Membership_Plan':[
+        'Basic','Premium','Basic','Pro','Premium','Basic','Pro','Premium','Basic','Pro','Premium','Basic','Pro','Basic','Premium',
+        'Pro','Basic','Premium','Basic','Pro','Premium','Basic','Pro','Premium','Basic','Pro','Premium','Pro','Basic','Premium'
+    ],
+    'Monthly_Fee':[
+        1500,3000,1500,4500,3000,1500,4500,3000,1500,4500,3000,1500,4500,1500,3000,
+        4500,1500,3000,1500,4500,3000,1500,4500,3000,1500,4500,3000,4500,1500,3000
+    ],
+    'Attendance_Days':[
+        12,20,8,24,17,10,26,15,6,22,19,9,25,11,16,
+        21,7,18,13,23,14,5,27,16,10,22,12,20,14,19
+    ],
+    'Calories_Burned':[
+        4200,6800,2900,8200,5900,3500,9100,5100,2100,7600,6400,3100,8700,3900,5500,
+        7300,2500,6100,4500,8000,4800,1800,9400,5700,3400,7800,4100,6900,4700,6500
+    ],
+    'Join_Date':[
+        '05-01-2026','05-01-2026','Jan 08, 2026','10-01-2026','12-Jan-26','15-01-2026','18-01-2026','20-Jan-26','22-01-2026','24-01-2026',
+        '26-Jan-26','28-01-2026','Feb 02, 2026','05-02-2026','07-02-2026','09-02-2026','11-Feb-26','14-02-2026','Feb 17, 2026','20-02-2026',
+        '22-02-2026','25-02-2026','27-Feb-26','01-03-2026','Mar 04, 2026','07-03-2026','09-03-2026','12-03-2026','15-Mar-26','Mar 18, 2026'
+    ],
+    'Membership_Status':[
+        'Active','Active','Active','Active','Active','Inactive','Active','Active','Inactive','Active','Active','Active','Active','Active','Active',
+        'Active','Inactive','Active','Active','Active','Active','Inactive','Active','Active','Active','Active','Inactive','Active','Active','Active'
+    ]
+}
+df = pd.DataFrame(data)
+
+# Dataset information
+df.info()
+
+# Shape of dataset
+df.shape
+
+# Data types of dataset
+df.dtypes
+
+# Unique Membership Plans
+df['Membership_Plan'].unique()
+
+# Number of Membership Plans
+df['Membership_Plan'].nunique()
+
+# Unique Memebership Status
+df['Membership_Status'].unique()
+
+# Adding New Memeber
+df.loc[30,:] = [931,'Karan','Male',29,'Pro',4500,23,8100,'20-Mar-2026','Active']
+df
+
+# Creationg float to int
+df['Member_ID'] = df['Member_ID'].astype(int)
+df['Age'] = df['Age'].astype(int)
+df['Monthly_Fee'] = df['Monthly_Fee'].astype(int)
+df['Attendance_Days'] = df['Attendance_Days'].astype(int)
+df['Calories_Burned'] = df['Calories_Burned'].astype(int)
+df
+
+# Coverting Join_Date column to pandas date
+df['Join_Date'] = pd.to_datetime(df['Join_Date'],format = "mixed")
+df['Join_Date'].dtypes
+
+df['Join_Day'] = df['Join_Date'].dt.day
+df['Join_Weekday'] = df['Join_Date'].dt.day_name()
+df['Join_Month'] = df['Join_Date'].dt.month_name()
+df['Join_Year'] = df['Join_Date'].dt.year
+df
+
+# Week day when most members joined the Gym
+df.groupby("Join_Weekday").agg(Member_Count = ("Member_ID","count")).sort_values(by = ['Member_Count'], ascending = [False]).head(1)
+
+# Creating conditional column attendance category
+def attendance_category(attendance_days):
+    if attendance_days >= 20:
+        return "Highly Active"
+    elif attendance_days >= 15:
+        return "Regular"
+    elif attendance_days >= 10:
+        return "Occasional"
+    else:
+        return "Low Attendance"
+df['Attendance_Category'] = df['Attendance_Days'].apply(attendance_category)
+df
+
+# Member count in each attendance category
+df.groupby("Attendance_Category").agg(Member_Count = ("Member_ID","count")).sort_values(by=['Member_Count'], ascending = [False])
+
+# Active members with attendace greater than 20 days and are Premium or Pro members
+df.loc[
+    (df['Membership_Status'] == "Active") &
+    (df['Attendance_Days'] >= 20) &
+    (df['Membership_Plan'].isin(['Premium','Pro']))]
+
+# Average attendance per Membership Plan
+df.groupby("Membership_Plan").agg(Avg_Attendance = ("Attendance_Days","mean")).round(0)
+
+# Membership Plan Metrics
+df.groupby("Membership_Plan").agg(
+    Member_Count = ("Member_ID","count"),
+    Average_Monthly_Fee = ("Monthly_Fee","mean"),
+    Average_Attendance = ("Attendance_Days","mean"),
+    Average_Calories_Burned = ("Calories_Burned","mean")
+).round(0).astype(int)
+
+# Monthly Revenue Generated by each Plan
+month_order =  ["January", "February", "March", "April","May", "June", "July", "August","September", "October", "November", "December"]
+df["Join_Month"] = pd.Categorical(df["Join_Month"],categories = month_order, ordered = True)
+df.groupby(["Membership_Plan","Join_Month"]).agg(Total_Revenue = ("Monthly_Fee","sum"))
+
+# Member who burnt maximum amount of calories
+df.loc[df['Calories_Burned'] == df['Calories_Burned'].max()]
+
+# Gym memebrs who are highly engaged
+df.loc[
+    (df['Attendance_Days'] >= 20 ) &
+    (df['Calories_Burned'] >= 7000)
+]
+
+# Create Engagement Score Column and sort in descending order
+df['Engagement_Score'] = df['Attendance_Days'] + (df['Calories_Burned'] / 1000)
+df.sort_values(by = ['Engagement_Score'],ascending = [False])
+df
+
+df.to_csv("fitzone_member_analysis.csv", index = False)
+```
+
