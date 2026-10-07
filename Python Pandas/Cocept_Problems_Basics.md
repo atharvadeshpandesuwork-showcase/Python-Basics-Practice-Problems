@@ -819,3 +819,202 @@ df
 df.to_csv("fitzone_member_analysis.csv", index = False)
 ```
 
+Problem 8: You are working as a Junior data analyst for an FMCG distribution company that sells products from several well-known consumer brands across major Indian cities. The company distributes products across categories such as Personal Care, Hair Care, Home Care, Oral Care, Beverages, Skin Care. Management has noticed high sales volume does not always mean high profitability. Some products sell in large quantities but require heavy discounts. 
+
+Problem 9: You are working as a Business/ Data Analyst for a new airline operator planning to launch a Mumbai -> Goa route. Before entering the market the airline wants to study its competitors. Management has collected information about flights currently operating on this route. Your job is to analyze the competitor data and answer four major strategic questions:
+- What type of aircraft should we operate. Should the airline use a smaller aircraft with lower capacity or a aircraft with larger capacity ?
+- When should we operate. Which departure period appears to have the strongest combination of passenger demand, occupancy and commercial potential ?
+- What pricing should we use. Should the new airline position itself as budget competitive or premium operator?
+- Which time period offers the best operational profile. Using the operational-risk indicators provided in the dataset, identify a suitable operating window ?
+
+Business Questions
+- Create a data frame and analyze Shape, Datatypes, Missing Values, Number of airlines, Number of aircraft types, Number of Flights?
+- Find: Number of flights operated by each airline?, Number of flights operated by each aircraft type?, Average fare of each airline? Identify the airline with the largest presence on this route?
+- Convert Flight_Date into proper date time column. Create Flight_Day, Flight_Weekday, Flight_Month, Day_Type where Monday -> Firday: "Weekday" and Saturday -> Sunday "Weekend"
+- Create a departure_Slot column with Before 07:00 → "Early Morning" 07:00–11:59 → "Morning" 12:00–15:59 → "Afternoon" 16:00–19:59 → "Evening" 20:00 onwards → "Night"?
+- Create Occupancy_Pct = Passengers / Seats * 100. Find the flight with the highest occupancy?
+- For each aircraft type calculate: Number of flights, Average seats, Average passengers, Average occupancy, Average fare, Average delay. Then determine which aircraft appears to be most suitable for Mumbai-Goa market?
+- For each departure slot calculate: Minimum fare, Maximum fare, Average fare, Average occupancy. Determine which departure period commands the highest average fare?
+- Compare weekdays and weekends based on: Average passengers, Average occupancy, Average fare, Average delay. Give short business interpretattion?
+- For each airline calculate: Average fare, Minimum fare, Maximum fare, Average occupancy. Identify which airline has the strongest combination of price and passenger utilization?
+- Create Estimated_Revenue = Passengers × Base_Fare × (1 - Discount_Pct / 100) Then calculate total estimated revenue by: Airline, Aircraft type, Departure slot?
+- Create: Revenue_Per_Seat = Estimated_Revenue / Seats Compare this across aircraft types. Answer: Is the aircraft with the highest passenger capacity necessarily the most commercially attractive?
+- Analyze Operational_Risk by departure slot. Calculate: Number of flights, Average delay, Average occupancy, Average operational risk. Identify the departure slot with the best balance between demand and the operational-risk indicators in the dataset ?
+- Find combinations of:Aircraft Type × Departure Slot where: Competitor presence is relatively low, Average occupancy is relatively high, Average fare is attractive. Identify a potential market opportunity?
+- Based on competitor pricing, occupancy and departure time, recommend a starting fare for the new airline. Your recommendation should classify the strategy as: Budget, Competitive,
+  Premium and explain why? You are presenting to the airline's management team. Give your final recommendation: Aircraft: Which aircraft type should be operated? , Departure Slot: When should the flight operate? Pricing: What fare should be targeted? Reasoning: Support your recommendation using your analysis of: Passenger demand, Occupancy, Revenue, Revenue per seat,- Competitor pricing, Delays, Operational-risk indicators?
+
+Solution
+```Python
+# Creating dataset 
+import pandas as pd
+df = pd.read_csv('Datasets/Mumbai_Goa Airline Market Analysis.csv')
+df
+
+# Data Understanding
+# Shape of Data
+df.shape
+
+# Dataypes of dataset
+df.dtypes
+
+# Missing Values present in the dataset
+df.isnull().sum()
+
+# Number of Airlines
+df['Airline'].unique()
+
+# Number of aircraft type
+df['Aircraft_Type'].unique()
+
+# Number of flight
+df['Flight_ID'].nunique()
+
+# Competitor revenue
+# Number of flights operated by each airline
+df.groupby("Airline").agg(Flights_Count = ("Flight_ID","count"))
+# Indigo is the largest operating airline on this route
+
+# Number of flights operated by each aircraft type
+df.groupby("Aircraft_Type").agg(Flights_Count = ("Aircraft_Type","count"))
+
+# Average fare per airline
+df.groupby("Airline").agg(Avg_Fare = ("Base_Fare","mean")).round(0)
+
+# Date Time Manipulation
+df['Flight_Date'] = pd.to_datetime(df['Flight_Date'], format = 'mixed')
+df['Flight_Day'] = df['Flight_Date'].dt.day 
+df['Flight_Weekday'] = df['Flight_Date'].dt.day_name()
+df['Flight_Month'] = df['Flight_Date'].dt.month_name()
+df['Flight_Year'] = df['Flight_Date'].dt.year
+df
+# Day type calculation
+def day_type(day):
+    if day == "Saturday" or day =="Sunday":
+        return "Weekend"
+    else:
+        return "Weekday"
+df['Day_Type'] = df['Flight_Weekday'].apply(day_type)
+df
+
+# Departure Time analysis
+df['Departure_Time'] = pd.to_datetime(df['Departure_Time'],format ="%H:%M")
+def time_of_day(hour):
+    if hour < 7:
+        return "Early Morning"
+    elif hour < 12:
+        return "Morning"
+    elif hour < 16:
+        return "Afternoon"
+    elif hour < 19:
+        return "Evening"
+    else:
+        return "Night"
+df['Departure_Slot'] = df['Departure_Time'].dt.hour.apply(time_of_day)
+
+# Departure time column correction
+df['Departure_Time_1'] = df['Departure_Time'].dt.strftime("%H:%M")
+cols = df.columns.tolist()
+cols.remove("Departure_Time_1")
+cols.insert(cols.index("Departure_Time") + 1,"Departure_Time_1")
+df = df[cols]
+df.rename(columns={"Departure_Time_1":"Departure_Hours"},inplace = True)
+df
+
+# Passenger Utilization and Flights with highest occupancy
+df['Occupancy_Pct'] = (df['Passengers'] / df['Seats'] * 100).round(2)
+df.loc[df['Occupancy_Pct'] == df['Occupancy_Pct'].max(),:]
+
+# Aircraft Analysis
+df.groupby("Aircraft_Type").agg(
+    Number_Flights = ("Aircraft_Type","count"),
+    Average_Seats = ("Seats","mean"),
+    Average_Passengers = ("Passengers","mean"),
+    Average_Occupancy = ("Occupancy_Pct","mean"),
+    Average_Fare = ("Base_Fare","mean"),
+    Average_Delay = ("Delay_Min","mean")
+).round(0).astype(int).sort_values(by=['Average_Occupancy'], ascending = False)
+# The flights suitable are A320, A320neo, B737 Max where neo all three aircrafts have a average occupany rate of 90.
+
+# Time of the day demand 
+# df.columns
+df.groupby("Departure_Slot").agg(
+    Number_Flights = ("Flight_ID","count"),
+    Average_Passengers = ("Passengers","mean"),
+    Average_Occupancy = ("Occupancy_Pct","mean"),
+    Average_Fare = ("Base_Fare","mean"),
+    Average_Delay = ("Delay_Min","mean")
+).round(0).astype(int).sort_values(by = ['Average_Occupancy'], ascending = [False])
+# The strongest slot based on Average Occupancy and Average Pssengers and Average delay is Morning, Night, Evening to be exact with time slots
+# 16:00 -> 19:00 (Evening) 7:00am -> 12:00 Pm (Morning) 20:00 onwards (Night)
+# Morning and evening is preferred because the average fares are lowest at those timings.
+
+# Pricing analysis
+df.groupby("Departure_Slot").agg(
+    Max_Fare = ("Base_Fare","max"),
+    Min_Fare = ("Base_Fare", "min"),
+    Average_Fare = ("Base_Fare","mean"),
+    Average_Occupancy = ("Occupancy_Pct","mean"),
+).round(0).astype(int).sort_values(by = ['Max_Fare'], ascending = [False])
+# The Afternoon period has the highest average fare with average occupancy above 80%
+
+# Weekday vs Weekend analysis
+# df.columns
+df.groupby("Day_Type").agg(
+    Average_Passengers = ("Passengers","mean"),
+    Average_Occupancy = ("Occupancy_Pct","mean"),
+    Avergae_Fare = ("Base_Fare","mean"),
+    Avergae_Delay = ("Delay_Min","mean")
+).round(0).astype(int)
+# There is no significant difference between passenger movent on weekday and weekend. At both times the average occupancy is greater than 80%
+# Also there is no significant difference between average_passengers and fare_prices.
+
+df.columns
+df.groupby("Airline").agg(
+    Average_Fare = ("Base_Fare","mean"),
+    Minimum_Fare = ("Base_Fare","min"),
+    Maximum_Fare = ("Base_Fare","max"),
+    Average_Occupancy = ("Occupancy_Pct","mean")
+).round(0).astype(int).sort_values(by = ['Average_Occupancy'], ascending = [False])
+# The competitor Akasa and Indigo are in budget category and have occupancy of 90% and above
+
+# Estimated Passenger revenue
+df['Estimated_Revenue'] = df['Passengers'] * df['Base_Fare'] * (1 - df['Discount_Pct'] / 100)
+df
+
+# Airline
+df.groupby("Airline").agg(Total_ER = ("Estimated_Revenue","sum")).round(0).astype(int).sort_values(by = ['Total_ER'], ascending = [False])
+
+# Aircraft type
+df.groupby("Aircraft_Type").agg(Total_ER = ("Estimated_Revenue","sum")).round(0).astype(int).sort_values(by = ['Total_ER'], ascending = [False])
+
+# Departure slot
+df.groupby("Departure_Slot").agg(Total_ER = ("Estimated_Revenue","sum")).round(0).astype(int).sort_values(by = ['Total_ER'], ascending = [False])
+
+# Revenue Per Seat
+df['Revenue_Per_Seat'] = df['Estimated_Revenue'] / df['Seats']
+df
+
+# Is the aircraft with the highest passenger capacity necessarily the most commercially attractive?
+df.groupby(['Aircraft_Type','Seats']).agg(
+    Revenue_Per_Seat = ("Revenue_Per_Seat","sum")
+).round(0).astype(int).sort_values(by = ['Revenue_Per_Seat'], ascending = [False])
+# No a aircraft with higher passenger seating is not commercially attractive because the revenue per seat decreases.
+
+risk_score = {"Low": 1, "Moderate": 2, "High": 3}
+df["Operational_Risk_Score"] = df["Operational_Risk"].map(risk_score)
+df.groupby("Departure_Slot").agg(
+    Number_of_Flights=("Flight_ID", "count"),
+    Average_Delay=("Delay_Min", "mean"),
+    Average_Occupancy=("Occupancy_Pct", "mean"),
+    Average_Operational_Risk=("Operational_Risk_Score", "mean")
+).round(2).sort_values(by = ['Average_Occupancy'], ascending = [False])
+# Evening is the best slot and it strikes the best balance between Average Occupancy and Operational risk with operational risk score of 1.22 
+# and occupancy of ~ 92%
+
+# Exporting dataset to csv file
+df.to_csv('Final_Data.csv',index = False)
+```
+```Text
+Final Strategy: The airline should enter the Mumbai–Goa route with an Airbus A320/A320neo, operate primarily during the evening slot, and adopt a competitive budget-oriented pricing strategy with a starting base fare of approximately ₹4,500–₹5,000. This strategy aims to attract price-sensitive passengers while leveraging the high occupancy and favorable operational profile observed in the competitor data.
+```
