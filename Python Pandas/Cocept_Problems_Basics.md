@@ -842,7 +842,7 @@ Business Questions
 - Analyze Operational_Risk by departure slot. Calculate: Number of flights, Average delay, Average occupancy, Average operational risk. Identify the departure slot with the best balance between demand and the operational-risk indicators in the dataset ?
 - Find combinations of:Aircraft Type × Departure Slot where: Competitor presence is relatively low, Average occupancy is relatively high, Average fare is attractive. Identify a potential market opportunity?
 - Based on competitor pricing, occupancy and departure time, recommend a starting fare for the new airline. Your recommendation should classify the strategy as: Budget, Competitive,
-  Premium and explain why? You are presenting to the airline's management team. Give your final recommendation: Aircraft: Which aircraft type should be operated? , Departure Slot: When should the flight operate? Pricing: What fare should be targeted? Reasoning: Support your recommendation using your analysis of: Passenger demand, Occupancy, Revenue, Revenue per seat,- Competitor pricing, Delays, Operational-risk indicators?
+Premium and explain why? You are presenting to the airline's management team. Give your final recommendation: Aircraft: Which aircraft type should be operated? , Departure Slot: When should the flight operate? Pricing: What fare should be targeted? Reasoning: Support your recommendation using your analysis of: Passenger demand, Occupancy, Revenue, Revenue per seat,- Competitor pricing, Delays, Operational-risk indicators?
 
 Solution
 ```Python
@@ -1018,3 +1018,5 @@ df.to_csv('Final_Data.csv',index = False)
 ```Text
 Final Strategy: The airline should enter the Mumbai–Goa route with an Airbus A320/A320neo, operate primarily during the evening slot, and adopt a competitive budget-oriented pricing strategy with a starting base fare of approximately ₹4,500–₹5,000. This strategy aims to attract price-sensitive passengers while leveraging the high occupancy and favorable operational profile observed in the competitor data.
 ```
+
+Problem 9: 
