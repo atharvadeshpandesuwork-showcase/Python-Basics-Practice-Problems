@@ -1043,7 +1043,7 @@ Business Questions
 - Add this transaction: Order_ID = 1041, Order_Date = 03/05/2026, Customer = Vikram, City = Mumbai, Category = Electronics, Product = Laptop, Units_Sold = 2,
   Selling_Price = 55000, Discount_Pct = 10, Cost_Per_Unit = 42000, Payment_Method = UPI.
 - Convert the Order_Date into a proper datetime format despite the mixed formats. Then create: Order_Day, Order_Weekday, Order_Month, Order_Year.
-- Create business metric Discounted_Selling_Price and Total revenue and Total Profit. Use the discounted selling price for actual revenue and prfit?
+- Create business metric Discounted_Selling_Price and Total revenue and Total Profit. Use the discounted selling price for actual revenue and profit?
 - Create sales performance based on units sold: 10+ → Very High, 5–9 → High, 2–4 → Medium, Below 2 → Low?
 - Find Number of orders per city, Number of orders per category, Number of orders per payment method, Number of orders per product?
 - For each city calculate: Total Units Sold, Total Revenue, Total Profit, Average Discount. Sort by total revenue in descending order?
