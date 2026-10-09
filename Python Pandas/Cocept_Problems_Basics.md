@@ -1019,4 +1019,44 @@ df.to_csv('Final_Data.csv',index = False)
 Final Strategy: The airline should enter the Mumbai–Goa route with an Airbus A320/A320neo, operate primarily during the evening slot, and adopt a competitive budget-oriented pricing strategy with a starting base fare of approximately ₹4,500–₹5,000. This strategy aims to attract price-sensitive passengers while leveraging the high occupancy and favorable operational profile observed in the competitor data.
 ```
 
-Problem 9: 
+Problem 9: You are working as junior data analyst for a retail company operating across multiple cities. Management wants to understand:
+- Which products and categories are performing well?
+- Which cities generate the most revenue?
+- How discounts affect profitability?
+- Which payment method are most commonly used?
+- How salary vary by month?
+- Which category performs best in each city?
+- Can a pivot help management compare performance quickly? 
+
+| **Order_ID** | **Order_Date** | **Customer** | **City** | **Category** | **Product** | **Units_Sold** | **Selling_Price** | **Discount_Pct** | **Cost_Per_Unit** | **Payment_Method** |
+| -----------: | -------------- | ------------ | -------- | ------------ | ----------- | -------------: | ----------------: | ---------------: | ----------------: | ------------------ |
+|         1001 | 05/01/2026     | Amit         | Mumbai   | Electronics  | Laptop      |              2 |             55000 |               10 |             42000 | UPI                |
+|         1002 | Jan 07, 2026   | Priya        | Pune     | Accessories  | Mouse       |              5 |               800 |                5 |               450 | Credit Card        |
+|         1003 | 2026-01-10     | Rahul        | Delhi    | Electronics  | Mobile      |              3 |             25000 |                8 |             19000 | UPI                |
+|         1004 | 12-Jan-2026    | Sneha        | Mumbai   | Accessories  | Keyboard    |              4 |              1500 |                5 |               900 | Debit Card         |
+|         1005 | 15/01/2026     | Karan        | Pune     | Electronics  | Laptop      |              1 |             55000 |               15 |             42000 | Credit Card        |
+
+Business Questions
+- Create a data frame and find: Number of rows and columns, Data Types, Missing values, Number of unique cities, Number of unique products, Number of unique payment methods?
+- Display only Customer, City, Products, Units_Sold, Selling_Price, Discount_Pct?
+- Management doesn't need customer information for the final sales analysis. Drop the customer column?
+- Add this transaction: Order_ID = 1041, Order_Date = 03/05/2026, Customer = Vikram, City = Mumbai, Category = Electronics, Product = Laptop, Units_Sold = 2,
+  Selling_Price = 55000, Discount_Pct = 10, Cost_Per_Unit = 42000, Payment_Method = UPI.
+- Convert the Order_Date into a proper datetime format despite the mixed formats. Then create: Order_Day, Order_Weekday, Order_Month, Order_Year.
+- Create business metric Discounted_Selling_Price and Total revenue and Total Profit. Use the discounted selling price for actual revenue and prfit?
+- Create sales performance based on units sold: 10+ → Very High, 5–9 → High, 2–4 → Medium, Below 2 → Low?
+- Find Number of orders per city, Number of orders per category, Number of orders per payment method, Number of orders per product?
+- For each city calculate: Total Units Sold, Total Revenue, Total Profit, Average Discount. Sort by total revenue in descending order?
+- For each product calculate: Total Units Sold, Total Revenue, Total Profit, Average Selling Price. Identify the best-performing product based on total profit?
+- For each month calculate: Total Units Sold, Total Revenue, Total Profit. Sort the data in chronological order?
+- Create a pivot table showing total revenue by City and Category?
+- Create a pivot table showing total profit by city?
+- Create one pivot table that shows for each city and category: Total Revenue, Total Profit, Total Units Sold?
+- Find the transactions where discount is 10% or higher and total revenue is high. Then investigate does higher discounts reduce profit?
+- Find the product that has the highest revenue but does not have the highest profit. Explain what data is causing the difference. Consider Units Sold, Discount, Selling Price, Cost Per Unit.
+- Based on your analysis recommend:
+    - Which city deserves more attention?
+    - Which product/ category should be prioritized?
+    - Which month performed the best?
+    - What does pivot table analysis reveal that simple group does not?
+  
