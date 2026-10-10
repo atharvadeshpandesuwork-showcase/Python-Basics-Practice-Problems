@@ -1059,4 +1059,129 @@ Business Questions
     - Which product/ category should be prioritized?
     - Which month performed the best?
     - What does pivot table analysis reveal that simple group does not?
+
+ Solution
+ ```Python
+# Creating dataframe
+import pandas as pd
+df = pd.read_csv('Datasets/Retail Business Performance Analysis.csv')
+print(f"Number of rows: {df.shape[0]}")
+print(f"Number of columns: {df.shape[1]}")
+
+# Datatypes
+df.dtypes
+
+# Missing values
+df.isnull().sum(axis = 0)
+
+# Number of Unique cities
+df['City'].unique()
+
+# Number of Unique Products
+df['Product'].unique()
+
+# Number of Unique payment methods
+df['Payment_Method'].unique()
+
+# Display only Customer, City, Products, Units_Sold, Selling_Price, Discount_Pct
+df[['Customer','City','Product','Units_Sold','Selling_Price','Discount_Pct']]
+
+# Drop customer information column
+df.drop(columns = ['Customer'],inplace = True)
+df
+
+# Adding new customer record
+df.loc[40,:] = [1041,'03/05/2026','Mumbai','Electronics','Laptop',2,55000,10,42000,'UPI']
+df['Order_ID'] = df['Order_ID'].astype(int)
+df['Units_Sold'] = df['Units_Sold'].astype(int)
+df['Selling_Price'] = df['Selling_Price'].astype(int)
+df['Discount_Pct'] = df['Discount_Pct'].astype(int)
+df['Cost_Per_Unit'] = df['Cost_Per_Unit'].astype(int)
+df
+
+# Convert order date into proper date time format Order_Day, Order_Weekday, Order_Month, Order_Year.
+df['Order_Date'] = pd.to_datetime(df['Order_Date'], format = "mixed")
+df['Order_Day'] = df['Order_Date'].dt.day
+df['Order_Weekday'] = df['Order_Date'].dt.day_name()
+df['Order_Month'] = df['Order_Date'].dt.month_name()
+df['Order_Year'] = df['Order_Date'].dt.year
+df
+
+# Create a business metric Discounted_Selling_Price, Total_Revenue and Total_Profit. Use dicounted selling price for actual profit.
+df['Discounted_Selling_Price'] = df['Selling_Price'] * (1-df['Discount_Pct']/100)
+# Converting to integer values
+df['Discounted_Selling_Price'] = df['Discounted_Selling_Price'].astype(int)
+df
+
+# Calculating total revenue
+df['Total_Revenue'] = df['Units_Sold'] * df['Discounted_Selling_Price']
+df['Profit_Per_Unit'] = df['Discounted_Selling_Price'] - df['Cost_Per_Unit']
+df['Total_Profit'] = df['Profit_Per_Unit'] * df['Units_Sold']
+df
+
+# Creating Sales Performance column based on following conditions: 10+ → Very High, 5–9 → High, 2–4 → Medium, Below 2 → Low.
+def sales_performance(units_sold):
+    if units_sold < 2:
+        return "Low"
+    elif units_sold <= 4:
+        return "Medium"
+    elif units_sold <= 9:
+        return "High"
+    else:
+        return "Very High"
+df['Sales_Category'] = df['Units_Sold'].apply(sales_performance)
+df
+
+# Find Number of Orders Per City
+df.groupby("City").agg(Order_Count = ("Order_ID","count")).sort_values(by = ['Order_Count'],ascending = [False])
+
+# Number of Orders Per Category
+df.groupby("Category").agg(Order_Count = ("Order_ID","count")).sort_values(by=['Order_Count'], ascending = [False])
+
+# Number of Orders payment method
+df.groupby("Payment_Method").agg(Order_Count = ("Order_ID","count")).sort_values(by = ['Order_Count'], ascending = [False])
+
+# Number of orders per product
+df.groupby("Product").agg(Order_Count = ("Order_ID","count")).sort_values(by = ['Order_Count'], ascending = [False])
+
+# Calculate Total Units Sold, Total Revenue, Total Profit, Average Discount. Sort by total revenue in descending order for each city
+df.groupby("City").agg(
+    Total_Units_Sold = ("Units_Sold","sum"),
+    Total_Revenue = ("Total_Revenue","sum"),
+    Total_Profit = ("Total_Profit","sum"),
+    Average_Discount = ("Discount_Pct","mean")
+).round(0).astype(int).sort_values(by = ['Total_Revenue'], ascending = [False])
+
+# For each product calculate: Total Units Sold, Total Revenue, Total Profit, Average Selling Price. Identify the best-performing product based on total profit?
+df.groupby("Product").agg(
+    Total_Units_Sold = ("Units_Sold","sum"),
+    Total_Revenue = ("Total_Revenue","sum"),
+    Total_Profit = ("Total_Profit","sum"),
+    Average_Selling_Price = ("Selling_Price","mean")
+).astype(int).sort_values(by=['Total_Revenue'], ascending = [False])
+
+# For each month calculate: Total Units Sold, Total Revenue, Total Profit. Sort the data in chronological order?
+month_Order = ['January','February','March','April','May','June','July','August','September','October','November','December']
+df['Order_Month'] = pd.Categorical(df['Order_Month'],categories = month_Order, ordered = True)
+df.groupby("Order_Month").agg(
+    Total_Units_Sold = ("Units_Sold","sum"),
+    Total_Revenue = ("Total_Revenue","sum"),
+    Total_Profit = ("Total_Profit","sum")
+)
+
+# Create a pivot table showing total profit by city
+df.pivot_table(index = "City", values = "Total_Profit", aggfunc = "sum", fill_value = 0)
+
+# Create a pivot table showing total revenue by City and Category
+df.pivot_table(index = "Product", columns = "City", values = "Total_Revenue", aggfunc = "sum", fill_value = 0)
+
+# Create one pivot table that shows for each city and category: Total Revenue, Total Profit, Total Units Sold?
+df.pivot_table(index = "Category", columns = "City", values = ['Units_Sold','Total_Revenue','Total_Profit'], aggfunc = {
+    "Units_Sold":"sum",
+    "Total_Revenue":"sum",
+    "Total_Profit":"sum"
+}, fill_value = 0)
+
+last 2 problems left
+```
   
