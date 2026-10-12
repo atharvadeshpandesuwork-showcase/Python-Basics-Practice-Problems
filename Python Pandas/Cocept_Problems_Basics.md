@@ -1184,4 +1184,151 @@ df.pivot_table(index = "Category", columns = "City", values = ['Units_Sold','Tot
 
 last 2 problems left
 ```
-  
+
+Problem 10: Quick bite operates across multiple cities. Management wants to analyze order revenue, delivery performance, restaurant sales, discounts, customer payment preferences. However the raw data contains inconsistent text, duplicate orders, missing values and numeric columns stored as strings.
+
+Business Questions
+- Find the shape, data types, missing value counts, unique cities restaurant and payment methods?
+- Standardize city names and clean inconsistent strings using string method?
+- Convert Quantity, Order_Amount, Discount_Pct, and Delivery_Minutes to numeric type and handle invalid values?
+- Identify and remove duplicate orders using the order_id column?
+- Investigate missing quantities, discounts, and delivery times and decide how to handle them?
+- Use isin() method to find orders from Mumbai and Pune?
+- Convert mixed formats and create day() weekday() and year() columns?
+- Join cleaned orders with restaurant master using pd.merge()?
+- Create discounted order amount and estimated profit use restaurants Cost_Per_Order for each order?
+- Classify delivery performance as Fast (30 minutes or less), Moderate (31–45 minutes), or Slow (over 45 minutes)?
+- Count orders by city, restaurant, category and payment method?
+- Calculate total revenue and estimated profit average delivery time and order count for each restaurant?
+- Show revenue by city and food category?
+- Compare order revenue and estimated profit for orders with discounts of at least 10%?
+- Verify the cleaned dataset and export it to csv without index?
+
+Solution:
+```Python
+# Creating Dataframe
+import pandas as pd
+df_orders = pd.read_excel('Datasets/QuickBite_Food_Delivery.xlsx')
+df_restaurants = pd.read_excel('Datasets/QuickBite_Restaurant_Master.xlsx')
+
+# Showing 5 columns from each dataset
+df_orders.head(5)
+df_restaurants.head(5)
+
+# Shape of dataset
+df_orders.shape
+df_restaurants.shape
+
+# data types for orders and restaurants dataset
+df_orders.dtypes
+df_restaurants.dtypes
+
+# Missing values in orders dataset
+df_orders.isnull().sum(axis = 0)
+
+# Missing values restaurants master
+df_restaurants.isnull().sum(axis = 0)
+
+# missing-value counts for orders and restaurants datasets
+orders_count = df_orders.isnull().sum(axis = 0).sum()
+restaurants_count = df_restaurants.isnull().sum(axis = 0).sum()
+print(f"Missing values of Orders dataset:{orders_count}")
+print(f"Missing values of Restaurants dataset:{restaurants_count}")
+
+# Cleaning dataset: Standardizing City names
+df_orders["City"] = df_orders["City"].str.strip().str.title()
+df_orders['Quantity'] = df_orders['Quantity'].str.replace("two","2",regex = False)
+df_orders
+
+# Cleaning missing values and converting to Not a Number 
+cols = ['Quantity','Order_Amount','Discount_Pct','Delivery_Minutes']
+df_orders[cols] = df_orders[cols].apply(pd.to_numeric, errors = 'coerce')
+df_orders
+
+# Filling numeric columns with mean
+df_orders['Quantity'] = df_orders['Quantity'].fillna(df_orders['Quantity'].mean()).astype(int)
+df_orders['Discount_Pct'] = df_orders['Discount_Pct'].fillna(df_orders['Discount_Pct'].mean()).astype(int)
+df_orders['Delivery_Minutes'] = df_orders['Discount_Pct'].fillna(df_orders['Delivery_Minutes'].mean()).astype(int)
+df_orders.isnull().sum()
+
+# Fixing date format
+df_orders['Order_Date'] = pd.to_datetime(df_orders['Order_Date'], format="mixed")
+df_orders
+
+# Removing duplicate records based on order_id columns
+df_orders = df_orders.drop_duplicates(subset = ['Order_ID'])
+df_orders.duplicated(subset = ['Order_ID']).sum()
+
+# Use isin method to find orders from Mumbai and Pune
+df_orders.loc[df_orders['City'].isin(['Mumbai','Pune'])]
+
+# Extract date information from orders columns
+df_orders['Order_Day'] = df_orders['Order_Date'].dt.day
+df_orders['Order_Weekday'] = df_orders['Order_Date'].dt.day_name()
+df_orders['Order_Year'] = df_orders['Order_Date'].dt.year
+df_orders
+
+# Join cleaned orders with restaurant master using pd.merge()
+df_merged = pd.merge(df_orders,df_restaurants,on = "Restaurant",how = "inner")
+df_merged.drop(columns = "Food_Category_y",inplace = True)
+df_merged
+
+# Creating discounted order amount and estimated profit column
+df_merged['Discounted_Order_Amount'] = (df_merged['Order_Amount'] * (1 - df_merged['Discount_Pct'] /100)).astype(int)
+df_merged['Estimated_Profit'] = df_merged['Discounted_Order_Amount'] - df_merged['Cost_Per_Order']
+df_merged
+
+# Classify delivery performance as Fast (30 minutes or less), Moderate (31–45 minutes), or Slow (over 45 minutes)
+def delivery_performance(time):
+    if time <= 30:
+        return "Fast"
+    elif time <= 45:
+        return "Moderate"
+    else:
+        return "Slow"
+
+df_merged['Delivery_Performance'] = df_merged['Delivery_Minutes'].apply(delivery_performance)
+df_merged
+
+# Orders by City
+df_merged.groupby("City").agg({"Order_ID":"count"}).reset_index().rename(columns = {"Order_ID":"Order_Count"})
+
+# Orders by restaurant
+df_merged.groupby("Restaurant").agg({"Order_ID":"count"}).reset_index().rename(columns = {"Order_ID":"Order_Count"})
+
+# Orders by category
+df_merged.groupby("Food_Category_x").agg({"Order_ID":"count"}).reset_index().rename(columns = {"Order_ID":"Order_Count"})
+
+# Orders by payment method
+df_merged.groupby("Payment_Method").agg({"Order_ID":"count"}).reset_index().rename(columns = {"Order_ID":"Order_Count"})
+
+# Calculate total revenue and estimated profit average delivery time and order count for each restaurant
+df_merged.groupby("Restaurant").agg(
+    Total_Revenue=("Discounted_Order_Amount", "sum"),
+    Estimated_Profit=("Estimated_Profit", "sum"),
+    Average_Delivery_Time=("Delivery_Minutes", "mean"),
+    Order_Count=("Order_ID", "count")
+).astype(int)
+
+# Show revenue by city and food category
+df_merged.pivot_table(
+    index = "Food_Category_x", 
+    columns = "City", 
+    values = "Discounted_Order_Amount",
+    aggfunc = "sum",
+    fill_value = 0
+).reset_index().rename(columns = {"Food_Category_x":"Food_Category"})
+
+# Compare order revenue and estimated profit for orders with discounts of at least 10%?
+df_merged.loc[df_merged["Discount_Pct"] >= 10].pivot_table(
+    index="Restaurant",
+    values=["Discounted_Order_Amount", "Estimated_Profit"],
+    aggfunc="sum",
+    fill_value=0
+)
+
+# Verify the cleaned dataset and export it to csv without index
+df_merged.to_excel('Cleaned_data.xlsx',index = False)
+```
+
+
