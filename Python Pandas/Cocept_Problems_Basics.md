@@ -1331,4 +1331,4 @@ df_merged.loc[df_merged["Discount_Pct"] >= 10].pivot_table(
 df_merged.to_excel('Cleaned_data.xlsx',index = False)
 ```
 
-
+Problem 11: Urban thread is a clothing brand selling across multiple Indian cities. Management wants to understand sales performance, product profitability, customer demand
