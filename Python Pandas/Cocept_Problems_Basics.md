@@ -1331,4 +1331,187 @@ df_merged.loc[df_merged["Discount_Pct"] >= 10].pivot_table(
 df_merged.to_excel('Cleaned_data.xlsx',index = False)
 ```
 
-Problem 11: Urban thread is a clothing brand selling across multiple Indian cities. Management wants to understand sales performance, product profitability, customer demand
+Problem 11: Urban thread is a clothing brand selling across multiple Indian cities. Management wants to understand sales performance, product profitability, customer demand, and seasonal trends. Before preparing reports, you need to clean the raw data and combine it with product information. 
+
+Business Questions:
+- Find the number of rows and columns and data types, missing value counts, unique cities, unique products and unique payment methods?
+- Standardize city, Product, Payment Method. Remove extra spaces correct inconsistent capitalization and use str.replace when appropriate?
+- Convert Quantity, Unit_Price, Discount_Pct and Delivery_Days to numneric columns using pd.numeric(). Handle invalid entries appropriately?
+- Count duplicates inspect repeated Order_ID values, and remove duplicate orders using drop_duplicates(). Keep appropriate record?
+- Handle missing values using explicit rules given:
+  - Quantity: Median of valid quantities.
+  - Unit_Price: Corresponding products list price from Product_Master.
+  - Discount_Pct: Median of valid discounts.
+  - Delivery days: Median of valid delivery days.
+- Use isin() method to select orders from Mumbai and Pune and also filter orders for selected products?
+- Use pd.merge() to join Sales Orders with Product Master and bring in category, Standard cost per unit, List Price and Season?
+- Calculate discounted selling price, total revenue, total profit?
+- Create a Sales_Performance category based on quantity sold: 8 or more: Very High, 5–7: High, 3–4: Medium, Below 3: Low?
+- Count the number of orders by product, city, category, payment method and sales channel?
+- For each city, calculate total units sold, total revenue, total profit, and average discount. Sort by total profit?
+- Create a pivot table for total revenue by city and category. Create another for total profit by product and season?
+- Compare orders with discounts of at least 15% against other orders. Determine whether higher discounts necessarily produce higher profit?
+- Identify the best-performing city, most profitable product, and strongest sales month. Export the cleaned dataset as urbanthread_sales_analysis.csv, without the index?
+
+Solution:
+```Python
+
+# Problem 11
+# Importing the dataset
+
+import pandas as pd
+df_sales_orders = pd.read_excel('Datasets/UrbanThread_Clothing_Sales_Practice.xlsx',sheet_name = 'Sales Orders')
+df_product_master = pd.read_excel('Datasets/UrbanThread_Clothing_Sales_Practice.xlsx',sheet_name = 'Product Master')
+
+# Displaying first 5 records of df_sales_orders
+df_sales_orders.head(5)
+
+# Displaying first 5 records of df_sales_orders
+df_sales_orders.head(5)
+
+# Displaying shape of orders and product master sheet
+print(f'Number of rows {df_sales_orders.shape[0]} and columns {df_sales_orders.shape[1]} in Sales Orders')
+print(f'Number of rows{df_product_master.shape[0]} and columns {df_product_master.shape[1]} in Product Master')
+
+# Datatypes in sales order sheet
+df_sales_orders.dtypes
+
+# Datatypes in product master sheet
+df_product_master.dtypes
+
+# Missing values in Sales Orders sheet
+df_sales_orders.isnull().sum()
+
+# Missing values in Product Master sheet
+df_product_master.isnull().sum()
+
+# Standardizing city names, product names and payment method
+df_sales_orders['City'] = df_sales_orders['City'].str.strip()
+df_sales_orders['City'] = df_sales_orders['City'].str.title()
+
+df_sales_orders['Product'] = df_sales_orders['Product'].str.strip()
+df_sales_orders['Product'] = df_sales_orders['Product'].str.title()
+df_sales_orders['Product'] = df_sales_orders['Product'].str.replace("-"," ", regex = False)
+df_sales_orders['Product'] = df_sales_orders['Product'].str.strip().replace(r"\s+"," ",regex = True)
+
+df_sales_orders['Payment_Method'] = df_sales_orders['Payment_Method'].str.strip()
+df_sales_orders['Payment_Method'] = df_sales_orders['Payment_Method'].str.title()
+df_sales_orders['Payment_Method'] = df_sales_orders['Payment_Method'].str.replace("Upi","UPI",regex = False)
+df_sales_orders['Payment_Method'] = df_sales_orders['Payment_Method'].str.replace("-"," ",regex = False)
+
+df_sales_orders['Customer'] = df_sales_orders['Customer'].str.strip().str.title()
+df_sales_orders.head(10)
+
+# Cleaning Quantity, Unit_Price, Discount_Pct and delivery days column
+cols = ['Quantity','Unit_Price','Discount_Pct','Delivery_Days']
+df_sales_orders[cols] = df_sales_orders[cols].apply(pd.to_numeric,errors = 'coerce')
+df_sales_orders.head(10)
+
+# Cleaning Product column in product master dataset
+df_product_master['Product'] = df_product_master['Product'].str.strip()
+df_product_master['Product'] = df_product_master['Product'].str.title()
+df_product_master['Product'] = df_product_master['Product'].str.strip().replace(r"\s+"," ",regex = True)
+df_product_master
+
+# Replacing Classic T Shirt with T-Shirt in order sales dataset
+df_sales_orders['Product'] = df_sales_orders['Product'].str.replace("Classic T Shirt","Classic T-Shirt",regex = False)
+df_sales_orders
+
+# Merging columns 
+df_merged = pd.merge(df_sales_orders, df_product_master, on = "Product", how = "left")
+df_merged.head(15)
+
+# Coverting List Price and Standard Cost Per Unit to numeric data
+df_merged['List_Price'] = pd.to_numeric(df_merged['List_Price'], errors = 'coerce')
+df_merged['Standard_Cost_Per_Unit'] = pd.to_numeric(df_merged['Standard_Cost_Per_Unit'], errors = 'coerce')
+df_merged
+
+# Display null values present in List_Price column
+df_merged.loc[df_merged["List_Price"].isna(),["Product", "List_Price", "Standard_Cost_Per_Unit"]]
+
+# Dropping duplicate Orders_ID
+df_merged = df_merged.drop_duplicates(subset = "Order_ID")
+df_merged['Order_ID'].duplicated().sum()
+
+# Filling Null values
+df_merged['Quantity'] = df_merged['Quantity'].fillna(df_merged['Quantity'].median()).astype(int)
+df_merged['Unit_Price'] = df_merged['Unit_Price'].fillna(df_merged['List_Price']).astype(int)
+df_merged['Discount_Pct'] = df_merged['Discount_Pct'].fillna(df_merged['Discount_Pct'].median()).astype(int)
+df_merged['Delivery_Days'] = df_merged['Delivery_Days'].fillna(df_merged['Delivery_Days'].median()).astype(int)
+df_merged.head(15)
+
+# Cleaning Dates
+df_merged['Order_Date'] = pd.to_datetime(df_merged['Order_Date'], format = 'mixed')
+
+# Use isin() method to select orders from Mumbai and Pune and also filter orders for selected products
+df_merged[df_merged['City'].isin(['Mumbai','Pune'])]
+
+# Calculate Discounted Selling Price
+df_merged['Discounted_Selling_Price'] = df_merged['Unit_Price'] * (1 - df_merged['Discount_Pct']/100)
+df_merged['Discounted_Selling_Price'] = df_merged['Discounted_Selling_Price'].round(0).astype(int)
+df_merged
+
+# Calculate total revenue
+df_merged['Total_Revenue'] = df_merged['Discounted_Selling_Price'] * df_merged['Quantity']
+df_merged
+
+# Calculate total profit
+df_merged['Total_Profit'] = df_merged['Discounted_Selling_Price'] - df_merged['Standard_Cost_Per_Unit']
+df_merged
+
+# Create a Sales_Performance category based on quantity sold: 8 or more: Very High, 5–7: High, 3–4: Medium, Below 3: Low
+def sales_performance(sales):
+    if sales < 3:
+        return "Low"
+    elif sales <= 4:
+        return "Medium"
+    elif sales <= 7:
+        return "High"
+    else:
+        return "Very High"
+df_merged['Sales_Performance'] = df_merged['Quantity'].apply(sales_performance)
+df_merged
+
+# Count the number of orders by product
+df_merged.groupby("Product").agg({"Order_ID":"count"}).reset_index().rename(columns = {"Order_ID":"Order_Count"})
+
+# Count the number of orders by city
+df_merged.groupby("City").agg({"Order_ID":"count"}).reset_index().rename(columns = {"Order_ID":"Order_Count"})
+
+# Count the number of orders by category
+df_merged.groupby("Category").agg(
+    {"Order_ID":"count"}).reset_index().rename(
+    columns = {"Order_ID":"Order_Count"}).sort_values(
+    by = ['Order_Count'], ascending = [False])
+
+# Count the number of orders by payment method
+df_merged.groupby("Payment_Method").agg(
+    {"Order_ID":"count"}).reset_index().rename(
+    columns = {"Order_ID":"Order_Count"}).sort_values(
+    by = ['Order_Count'], ascending = [False])
+
+# Count the number of orders by sales channel
+df_merged.groupby("Sales_Channel").agg({'Order_ID':'count'}).reset_index().rename(
+    columns = {'Order_ID':'Order_count'})
+
+# For each city, calculate total units sold, total revenue, total profit, and average discount. Sort by total profit
+df_merged.columns
+df_merged.groupby("City").agg(
+    Total_Units_Sold = ('Quantity','sum'),
+    Total_Revenue = ('Total_Revenue','sum'),
+    Total_Profit = ('Total_Profit','sum'),
+    Average_Discount = ('Discount_Pct','mean')
+).sort_values(by = ['Total_Profit'], ascending = [False])
+
+# Create a pivot table for total revenue by city and category.
+df_merged.pivot_table(index = 'Category',columns = 'City',values = 'Total_Revenue',aggfunc = 'sum',fill_value = 0)
+
+# Create a pivot table for total profit by product and season.
+df_merged.columns
+df_merged.pivot_table(index='Product',columns='Season',values='Total_Profit',aggfunc='sum',fill_value=0)
+
+# Last 2 Questions pending
+
+# Exporting final dataset
+df_merged.to_excel('Cleaned Datasets/Urban_Thread_Clothing_Cleaned.xlsx',index = False)
+```
